@@ -1,0 +1,98 @@
+{% extends 'layout.html' %}
+
+{% block title %}Voters Paradise{% endblock %}
+
+{%block login%}<button type="button" class="btn btn-outline-success ml-1 my-2 my-sm-0" data-toggle="modal" data-target="#Loginmodal">
+    Login
+  </button>
+     {%endblock%}
+     {%block signup%}<button type="button" class="btn btn-outline-success ml-1 my-2 my-sm-0" data-toggle="modal" data-target="#signupmodal">
+        signup
+      </button>
+         {%endblock%}
+
+    {%block loginmodal%} 
+    <div class="modal fade" id="Loginmodal" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="ModalCenterTitle">Login</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="home" autocomplete="on">
+                    {% csrf_token %}
+                    <div class="form-group">
+                    <label for="emialinput">Email address</label>
+                    <input type="email" class="form-control" id="lemail" aria-describedby="emailHelp" placeholder="Enter E-mail">
+                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="emialinput">Password</label>
+                        <input type="password" class="form-control" id="lpassword" placeholder="Enter Password">
+                    </div>
+                    <button type="submit" class="btn btn-primary float-right">Submit</button>
+
+                </form>
+            </div>
+          </div>
+        </div>
+    </div>
+{%endblock%}
+{%block signupmodal%}
+<div class="modal fade" id="signupmodal" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ModalCenterTitle">Sign Up</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+        <form method="POST" action="{% url 'signup'%}" autocomplete="on">
+          
+          <div class="form-group">
+          <label for="signupemaillab">Email address</label>
+          <input type="email" class="form-control" name="semail" aria-describedby="emailHelp" placeholder="Enter E-mail">
+          <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+          </div>
+          <div class="form-group">
+            <label for="usernameinput">User Name</label>
+            <input type="text" class="form-control" name="susername" placeholder="Enter Username">
+        </div> 
+          
+          <div class="form-group">
+              <label for="firstname">First Name</label>
+              <input type="text" class="form-control" name="sfirstname" placeholder="Enter First name">
+          </div> 
+
+          <div class="form-group">
+              <label for="lastname">Last Name</label>
+              <input type="text" class="form-control" name="slastname" placeholder="Enter Last name">
+          </div>       
+                         
+          <div class="form-group">
+            <label for="passwordinpu">Password</label>
+            <input type="password" class="form-control" name="spassword" placeholder="Enter Password">
+            </div>
+                          
+            <div class="form-group">
+              <label for="passwordinput2">Confirm Password</label>
+              <input type="password" class="form-control" name="spassword2" placeholder="Re-enter Password">
+            </div>
+            {% csrf_token %} 
+            <button type="submit" class="btn btn-primary float-right">Submit</button>
+
+        </form>
+    </div>
+    
+    </div>
+  </div>
+</div>
+{%endblock%}
+
+ 
