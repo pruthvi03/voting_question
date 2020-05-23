@@ -53,12 +53,21 @@
       {% if user.is_authenticated %}
 
       <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle ml-2" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Hello {{request.user}}
+        <button class="btn btn-info dropdown-toggle ml-2" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Settings
         </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          
-          <a class="dropdown-item" href="/logout">Logout</a>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+          <div class="col">
+                  <div class="d-flex justify-content-center">
+                    <img class="rounded-circle" src="C:/Users/ht501/OneDrive/Desktop/python project/django_voting/voting-questtion/votersparadise/polls/templates/1.jpg">
+                    <br><label>{{request.user}}</label>
+                  </div>
+
+                  <a class="dropdown-item border rounded my-1" href="/logout">Profile</a>
+                  <a class="dropdown-item border rounded my-1" href="/logout">Following</a>                  
+                  <a class="dropdown-item border rounded my-1" href="/logout">Followers</a>
+                  <a class="dropdown-item border rounded my-1" href="/logout">Logout</a>
+          </div>
         </div>
       </div>
       
@@ -89,8 +98,12 @@
 {%endblock%}
 </head>
 <body>
-
-
+<div class=".container mt-3 mx-5">
+ <div class="d-flex justify-content-between mb-3">
+    <div class="col-8 px-3">col-8</div>
+    
+  </div>
+</div>
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
