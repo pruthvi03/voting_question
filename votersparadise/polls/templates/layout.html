@@ -50,21 +50,60 @@
     <form class="form-inline my-2 my-lg-0">
       <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-      {%block login%}
-      {%endblock%}
-      {%block signup%}
-      {%endblock%}
+      {% if user.is_authenticated %}
+
+      <div class="dropdown">
+        <button class="btn btn-info dropdown-toggle ml-2" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Settings
+        </button>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+          <div class="col">
+                  <div class="d-flex justify-content-center">
+                    <img class="rounded-circle" src="C:/Users/ht501/OneDrive/Desktop/python project/django_voting/voting-questtion/votersparadise/polls/templates/1.jpg">
+                    <br><label>{{request.user}}</label>
+                  </div>
+
+                  <a class="dropdown-item border rounded my-1" href="/logout">Profile</a>
+                  <a class="dropdown-item border rounded my-1" href="/logout">Following</a>                  
+                  <a class="dropdown-item border rounded my-1" href="/logout">Followers</a>
+                  <a class="dropdown-item border rounded my-1" href="/logout">Logout</a>
+          </div>
+        </div>
+      </div>
+      
+
+      {% else %}
+      <button type="button" class="btn btn-outline-success ml-1 my-2 my-sm-0" data-toggle="modal" data-target="#Loginmodal">
+        Login
+      </button>
+      <button type="button" class="btn btn-outline-success ml-1 my-2 my-sm-0" data-toggle="modal" data-target="#signupmodal">
+        signup
+      </button>
+      
+      {% endif%}
     </form>
   </div>
 </nav>
+{% for message in messages %}
+<div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+  <strong>Messages:</strong> {{message}}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+{% endfor %}
 {%block loginmodal%}
 {%endblock%}
 {%block signupmodal%}
 {%endblock%}
 </head>
 <body>
-
-
+<div class=".container mt-3 mx-5">
+ <div class="d-flex justify-content-between mb-3">
+    <div class="col-8 px-3">col-8</div>
+    
+  </div>
+</div>
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
