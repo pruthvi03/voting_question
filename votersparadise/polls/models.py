@@ -3,9 +3,19 @@ from django.contrib.auth.models import User
 
 
 class UserFollowing(models.Model):
-    user_id = models.ForeignKey(User ,on_delete=models.CASCADE, related_name = 'following')
-    following_user_id = models.ForeignKey(User ,on_delete=models.CASCADE, related_name = 'followers')
+    user = models.OneToOneField(User , on_delete = models.CASCADE, default="")
+    following = models.ForeignKey(User ,on_delete=models.CASCADE, related_name = 'following', blank=True, null=True)
+    profile_pic = models.ImageField(upload_to = "polls/profile_pic" , default = "")
+    followers = models.ForeignKey(User ,on_delete=models.CASCADE, related_name = 'followers', blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ("user", "following")
+        unique_together = ("user","followers")
+
+    def __str__(self):
+       return self.user.username
+    
 
 class QuestionTable(models.Model):
     question_text = models.CharField(max_length = 300 ,null = False )
