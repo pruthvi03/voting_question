@@ -2,7 +2,33 @@
 
 {% block title %}Voters Paradise{% endblock %}
 
-
+    {%block style%}
+    <style>
+        @media (min-width: 768px)
+        .container, .container-md, .container-sm {
+            max-width: 720px;
+        }
+        @media (min-width: 576px)
+        .container, .container-sm {
+            max-width: 540px;
+        }
+        @media (min-width: 768px)
+        .container {
+            max-width: 720px;
+        }
+        @media (min-width: 576px)
+        .container {
+            max-width: 540px;
+        }
+        .container {
+            width: 100%;
+            padding-right: 15px;
+            padding-left: 15px;
+            margin-right: auto;
+            margin-left: auto;
+        }
+    </style>
+    {%endblock%}
 
     {%block loginmodal%} 
     <div class="modal fade" id="Loginmodal" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
@@ -90,15 +116,33 @@
 {%endblock%}
 
 {%block question%}
-<div class=".container" style= "height:100%">
- <div class="d-flex justify-content-center mb-3 px-2 ">
- <div class="container border border-primary border-top-0 border-bottom-0 ">
-    <div class="col-9 py-2">
-        <div class="row">
-        collllllll
-        </div>
+<div class="container">
+  <div class="d-flex align-items-center p-3 my-3 text-dark-50 rounded shadow-sm">
+    <h3>Questions & Polls</h3>
+  </div>
+  <div class="p-3 my-3 rounded shadow-sm">
+    <div class="question">
+    <strong>what shoud be done to universe in this pandamic situation?</strong>
     </div>
+    <div class="answer">
+      <br>
+      <div class="custom-control custom-radio">
+        <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
+        <label class="custom-control-label" for="customRadio1">Toggle this custom radio</label>
+      </div>
+      <div class="custom-control custom-radio">
+        <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
+        <label class="custom-control-label" for="customRadio2">Or toggle this other custom radio</label>
+      </div>
+      <div class="custom-control custom-radio">
+        <input type="radio" id="customRadio3" name="customRadio" class="custom-control-input">
+        <label class="custom-control-label" for="customRadio3">Or other custom radio</label>
+      </div>
+  
+    </div>
+
   </div>
-  </div>
+  
+
 </div>
 {%endblock%} 
