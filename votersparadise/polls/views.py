@@ -3,6 +3,7 @@ from django.contrib import messages
 from django.shortcuts import HttpResponse,redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate ,login ,logout
+from polls.models import UserFollowing,QuestionTable,Groupcode
 # Create your views here.
 
 
@@ -64,5 +65,19 @@ def handlelogout(request):
     messages.success(request, "Logout Succesfully.")
     return redirect('home')
 
-        
-        
+def search(request):
+    query = request.GET['search']
+    users = User.objects.filter(username__icontains = query).exclude(username__exact = request.user)
+    results = {
+        "result":users
+    }
+    return render(request,'search.html',results)
+def following(request):
+    pass
+
+def followers(request):
+    pass
+def profile(request):
+    pass
+def follow(request):
+    pass
