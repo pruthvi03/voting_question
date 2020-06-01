@@ -3,16 +3,17 @@ from django.contrib import messages
 from django.shortcuts import HttpResponse,redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate ,login ,logout
-from polls.models import UserFollowing,QuestionTable,Groupcode
+from polls.models import UserFollowing,QuestionTable,Groupcode,UserFollowers
 # Create your views here.
 
 
 def index(request):
     if request.user.is_authenticated:
         following = UserFollowing.objects.filter(user__exact = request.user).count()
-        followers = UserFollowing.objects.filter(user__exact = request.user).count()
+        followers = UserFollowers.objects.filter(user__exact = request.user).count()
 
         params = {
+            'followers':followers,
             'following':following
         }
         return render(request,'index.html',params)
