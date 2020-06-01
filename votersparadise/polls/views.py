@@ -8,7 +8,16 @@ from polls.models import UserFollowing,QuestionTable,Groupcode
 
 
 def index(request):
-    return render(request,'index.html')
+    if request.user.is_authenticated:
+        following = UserFollowing.objects.filter(user__exact = request.user).count()
+        followers = UserFollowing.objects.filter(user__exact = request.user).count()
+
+        params = {
+            'following':following
+        }
+        return render(request,'index.html',params)
+    else:
+        return render(request,'index.html')
 
 def passreset(request):
     return render(request,'passreset.html')
@@ -74,6 +83,7 @@ def search(request):
     return render(request,'search.html',results)
 def following(request):
     pass
+    
 
 def followers(request):
     pass
