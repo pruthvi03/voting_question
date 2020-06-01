@@ -76,12 +76,18 @@ def handlelogout(request):
     return redirect('home')
 
 def search(request):
-    query = request.GET['search']
-    users = User.objects.filter(username__icontains = query).exclude(username__exact = request.user)
-    results = {
-        "result":users
-    }
-    return render(request,'search.html',results)
+    if request.user.is_authenticated:
+            following = UserFollowing.objects.filter(following__exact = request.user).all()
+            query = request.GET['search']
+            users = User.objects.filter(username__icontains = query).exclude(username__exact = request.user)
+            results = {
+                "following":following,
+                "query":query,
+                "result":users
+            }
+            return render(request,'search.html',results)
+        
+    
 def following(request):
     pass
     
@@ -90,5 +96,24 @@ def followers(request):
     pass
 def profile(request):
     pass
+
+
 def follow(request):
+    if request.method== 'POST':
+        followid = request.POST["usernameoffollower"]
+        myid = request.user
+        query = request.POST["query"]
+        # finfollow = User.objects.get(username = followid)
+        # addfollowing = UserFollowing(user = myid, following = finfollow)
+        # addfollowing.save()
+        # addfollowers = UserFollowers(user = finfollow, followers = myid)
+        # addfollowers.save()
+        if request.user.is_authenticated:
+            following = UserFollowing.objects.filter(following__exact = request.user).count()
+            params = {'following':following}
+            print("000000000000000000000000",following)
+        return redirect('/search?search='+query,params)
+
+
+def askquestion(request):
     pass
