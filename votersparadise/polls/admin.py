@@ -1,7 +1,8 @@
 from django.contrib import admin
-from .models import UserFollowing,QuestionTable,Groupcode
+from .models import UserFollowing,QuestionTable,Groupcode,UserFollowers
 # Register your models here.
 
 admin.site.register(UserFollowing)
 admin.site.register(QuestionTable)
 admin.site.register(Groupcode)
+admin.site.register(UserFollowers)

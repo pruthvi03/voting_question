@@ -71,17 +71,29 @@
     {% for user in result%}
     <div class="shadow p-3 mb-5 bg-white rounded">
       <div class="user">
+        <form action="/follow" method="POST">
+        {% csrf_token %}
         
-        <a class="float-right border rounded my-1 p-1" href="/follow">Follow</a>
+        {%if user.username in following %}
+          
+          <button onclick="this.innerHTML='Follow';" id="follow" class="btn btn-primary float-right" type="submit">Following</button>
+        {% else %}
+        
+        <button onclick="this.innerHTML='Following';" id="follow" class="btn btn-primary float-right" type="submit">Follow</button>
+        {% endif %}
     
-  
-        
-        <strong>{{user.username}}</strong>
-        <p>{{user.email}}</p>
-        
+          <input type="hidden" id="usernameoffollower" name="usernameoffollower" value={{user.username}}>
+          <input type="hidden" id="query" name="query" value={{query}}>
+          <strong>{{user.username}}</strong>
+          <p>{{user.email}}</p>
+        </form>
       </div>
       
     </div>
     {%endfor%}
+
+{%endblock%}
+{%block scripts%}
+    
 
 {%endblock%}

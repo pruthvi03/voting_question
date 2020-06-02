@@ -2,104 +2,146 @@
 
 {% block title %}Voters Paradise{% endblock %}
 
-    {%block style%}
-    <style>
-        @media (min-width: 768px)
-        .container,.container-md, .container-sm {
-            max-width: 720px;
-        }
-        @media (min-width: 576px)
-        .container, .container-sm {
-            max-width: 540px;
-        }
-        @media (min-width: 768px)
-        .container {
-            max-width: 720px;
-        }
-        @media (min-width: 576px)
-        .container {
-            max-width: 540px;
-        }
-        
-        
-        .container {
-            width: 100%;
-            padding-right: 15px;
-            padding-left: 15px;
-            margin-right: auto;
-            margin-left: auto;
-        }
-        .sticky{
+{%block style%}
+<style>
+  @media (min-width: 768px) .container,
+  .container-md,
+  .container-sm {
+    max-width: 720px;
+  }
 
-          position: fixed;
-          width: 75%;
-          z-index: 1;
-          top: 0;
-        }
-        
-        
-        
-        
-    </style>
-    {%endblock%}
-    {%block navbar%}
-      <div class="dropdown">
-        <button class="btn btn-info dropdown-toggle ml-2" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Settings
-        </button>
-        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-          <div class="col">
-                  <div class="d-flex justify-content-center my-2">
-                    <br><label>Hello, {{request.user |truncatechars:10}}</label>
-                  </div>
-                  
-                  <div class="entity">
-                    <a class="dropdown-item border rounded my-1" href="/profile"><svg class="bi bi-person-fill mx-1" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                      <path fill-rule="evenodd" d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
-                    </svg>Profile</a>
-                    <a class="dropdown-item border rounded my-1" href="/following">{{follwoing.username}}Following</a>                  
-                    <a class="dropdown-item border rounded my-1" href="/followers">Followers</a>
-                    <a class="dropdown-item border rounded my-1" href="/logout">Logout</a>
-                  </div>
-                  
-          </div>
-        </div>
+  @media (min-width: 576px) .container,
+  .container-sm {
+    max-width: 540px;
+  }
+
+  @media (min-width: 768px) .container {
+    max-width: 720px;
+  }
+
+  @media (min-width: 576px) .container {
+    max-width: 540px;
+  }
+
+
+  .container {
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+ 
+
+  .button {
+    z-index: 2;
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 36px;
+    cursor: pointer;
+    border-radius: 50%;
+    position: sticky;
+  }
+
+  #plusicn {
+    margin-bottom: 9px;
+  }
+  .ask{
+    width: 5%;
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+    #head {
+    width: max-content;
+    margin-top: -9px;
+    margin-left: auto;
+    
+    margin-right: auto;
+}
+
+  #starts{
+    margin-top: -2px;
+  }
+ .sticky{
+   top: 0;
+  }
+  #space {
+    width: max-content;
+    margin-left: auto;
+    margin-right: auto;
+}
+</style>
+{%endblock%}
+{%block navbar%}
+<div class="dropdown">
+  <button class="btn btn-info dropdown-toggle ml-2" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+    aria-haspopup="true" aria-expanded="false">
+    Settings
+  </button>
+  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+    <div class="col">
+      <div class="d-flex justify-content-center my-2">
+        <br><label>Hello, {{request.user |truncatechars:10}}</label>
       </div>
-      {%endblock%}
 
-    {%block loginmodal%} 
-    <div class="modal fade" id="Loginmodal" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="ModalCenterTitle">Login</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-                <form method="post" action="{% url 'handlelogin'%}" autocomplete="on">
-                    {% csrf_token %}
-                    <div class="form-group">
-                      <label for="signupemaillab">Email address</label>
-                      <input type="email" required class="form-control" name="lemail" aria-describedby="emailHelp" placeholder="Enter E-mail">
-                      <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-                    </div>
-                    
-                    <div class="form-group">
-                      <label for="passwordinpu">Password</label>
-                      <input type="password" required class="form-control" name="lpassword" placeholder="Enter Password">
-                      </div>
-                    <button type="submit" class="btn btn-primary float-right">Submit</button>
+      <div class="entity">
+        <a class="dropdown-item border rounded my-1" href="/profile">Profile<svg class="bi bi-person-fill ml-1 mb-1"
+            width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+          </svg></a>
 
-                </form>
-            </div>
-          </div>
-        </div>
+        <a class="dropdown-item border rounded my-1 text-left" href="/following">Following<strong>
+            {{following}}</strong></a>
+        <a class="dropdown-item border rounded my-1" href="/followers">Followers<strong> {{followers}}</strong></a>
+        <a class="dropdown-item border rounded my-1" href="/logout">Logout</a>
+      </div>
+
     </div>
+  </div>
+</div>
+{%endblock%}
+
+{%block loginmodal%}
+<div class="modal fade" id="Loginmodal" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ModalCenterTitle">Login</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form method="post" action="{% url 'handlelogin'%}" autocomplete="on">
+          {% csrf_token %}
+          <div class="form-group">
+            <label for="signupemaillab">Email address</label>
+            <input type="email" required class="form-control" name="lemail" aria-describedby="emailHelp"
+              placeholder="Enter E-mail">
+            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+          </div>
+
+          <div class="form-group">
+            <label for="passwordinpu">Password</label>
+            <input type="password" required class="form-control" name="lpassword" placeholder="Enter Password">
+          </div>
+          <button type="submit" class="btn btn-primary float-right">Submit</button>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 {%endblock%}
 {%block signupmodal%}
-<div class="modal fade" id="signupmodal" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="signupmodal" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle"
+  aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -109,44 +151,45 @@
         </button>
       </div>
       <div class="modal-body">
-        
+
         <form method="POST" action="{% url 'signup'%}" autocomplete="on">
-          
+
           <div class="form-group">
-          <label for="signupemaillab">Email address</label>
-          <input type="email" required class="form-control" name="semail" aria-describedby="emailHelp" placeholder="Enter E-mail">
-          <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+            <label for="signupemaillab">Email address</label>
+            <input type="email" required class="form-control" name="semail" aria-describedby="emailHelp"
+              placeholder="Enter E-mail">
+            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
           </div>
           <div class="form-group">
             <label for="usernameinput">User Name</label>
             <input type="text" required class="form-control" name="susername" placeholder="Enter Username">
-        </div> 
-          
-          <div class="form-group">
-              <label for="firstname">First Name</label>
-              <input type="text" required class="form-control" name="sfirstname" placeholder="Enter First name">
-          </div> 
+          </div>
 
           <div class="form-group">
-              <label for="lastname">Last Name</label>
-              <input type="text" class="form-control" name="slastname" placeholder="Enter Last name">
-          </div>       
-                         
+            <label for="firstname">First Name</label>
+            <input type="text" required class="form-control" name="sfirstname" placeholder="Enter First name">
+          </div>
+
+          <div class="form-group">
+            <label for="lastname">Last Name</label>
+            <input type="text" class="form-control" name="slastname" placeholder="Enter Last name">
+          </div>
+
           <div class="form-group">
             <label for="passwordinpu">Password</label>
             <input type="password" required class="form-control" name="spassword" placeholder="Enter Password">
-            </div>
-                          
-            <div class="form-group">
-              <label for="passwordinput2">Confirm Password</label>
-              <input type="password" required class="form-control" name="spassword2" placeholder="Re-enter Password">
-            </div>
-            {% csrf_token %} 
-            <button type="submit" class="btn btn-primary float-right">Submit</button>
+          </div>
+
+          <div class="form-group">
+            <label for="passwordinput2">Confirm Password</label>
+            <input type="password" required class="form-control" name="spassword2" placeholder="Re-enter Password">
+          </div>
+          {% csrf_token %}
+          <button type="submit" class="btn btn-primary float-right">Submit</button>
 
         </form>
-    </div>
-    
+      </div>
+
     </div>
   </div>
 </div>
@@ -154,90 +197,146 @@
 
 {%block question%}
 <div class="container">
-<div class="row" id="head">
-  <div class="col">
-  <div class="bg-dark p-3 my-3 text-white-50 rounded shadow-sm" >
-    <h3>Questions & Polls</h3>
+  <div class="sticky-top" id="head">
+    <div class="d-flex justify-content-center" id="space">
+      <div class="bg-dark p-3 my-3 text-white-50 rounded shadow-sm ">
+        <h3>Questions & Polls</h3>
+      </div>
+    </div>
   </div>
-  </div>
-</div>
-<div class="row">
-  <div class="col">
+  <div class="row" id="starts">
+    <div class="col">
 
-    <div class="shadow p-3 mb-5 bg-white rounded">
-      <div class="question">
-      <strong>what shoud be done to universe in this pandamic situation?</strong>
+      <div class="shadow p-3 mb-5 bg-white rounded">
+        <div class="question">
+          <strong>what shoud be done to universe in this pandamic situation?</strong>
+        </div>
+        <div class="answer">
+          <br>
+          <div class="custom-control custom-radio">
+            <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
+            <label class="custom-control-label" for="customRadio1">Toggle this custom radio</label>
+          </div>
+          <div class="custom-control custom-radio">
+            <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
+            <label class="custom-control-label" for="customRadio2">Or toggle this other custom radio</label>
+          </div>
+          <div class="custom-control custom-radio">
+            <input type="radio" id="customRadio3" name="customRadio" class="custom-control-input">
+            <label class="custom-control-label" for="customRadio3">Or toggle this other custom radio</label>
+          </div>
+        </div>
+
       </div>
-      <div class="answer">
-        <br>
-        <div class="custom-control custom-radio">
-          <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
-          <label class="custom-control-label" for="customRadio1">Toggle this custom radio</label>
+
+      <div class="shadow p-3 mb-5 bg-white rounded">
+        <div class="question">
+          <strong>what shoud be done to universe in this pandamic situation?</strong>
         </div>
-        <div class="custom-control custom-radio">
-          <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
-          <label class="custom-control-label" for="customRadio2">Or toggle this other custom radio</label>
+        <div class="answer">
+          <br>
+          <div class="custom-control custom-radio">
+            <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
+            <label class="custom-control-label" for="customRadio1">Toggle this custom radio</label>
+          </div>
+          <div class="custom-control custom-radio">
+            <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
+            <label class="custom-control-label" for="customRadio2">Or toggle this other custom radio</label>
+          </div>
+          <div class="custom-control custom-radio">
+            <input type="radio" id="customRadio3" name="customRadio" class="custom-control-input">
+            <label class="custom-control-label" for="customRadio3">Or toggle this other custom radio</label>
+          </div>
         </div>
-        <div class="custom-control custom-radio">
-          <input type="radio" id="customRadio3" name="customRadio" class="custom-control-input">
-          <label class="custom-control-label" for="customRadio3">Or toggle this other custom radio</label>
+
+      </div>
+
+      <div class="shadow p-3 mb-5 bg-white rounded">
+        <div class="question">
+          <strong>what shoud be done to universe in this pandamic situation?</strong>
+        </div>
+        <div class="answer">
+          <br>
+          <div class="custom-control custom-radio">
+            <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
+            <label class="custom-control-label" for="customRadio1">Toggle this custom radio</label>
+          </div>
+          <div class="custom-control custom-radio">
+            <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
+            <label class="custom-control-label" for="customRadio2">Or toggle this other custom radio</label>
+          </div>
+          <div class="custom-control custom-radio">
+            <input type="radio" id="customRadio3" name="customRadio" class="custom-control-input">
+            <label class="custom-control-label" for="customRadio3">Or toggle this other custom radio</label>
+          </div>
+        </div>
+
+      </div> <div class="shadow p-3 mb-5 bg-white rounded">
+        <div class="question">
+          <strong>what shoud be done to universe in this pandamic situation?</strong>
+        </div>
+        <div class="answer">
+          <br>
+          <div class="custom-control custom-radio">
+            <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
+            <label class="custom-control-label" for="customRadio1">Toggle this custom radio</label>
+          </div>
+          <div class="custom-control custom-radio">
+            <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
+            <label class="custom-control-label" for="customRadio2">Or toggle this other custom radio</label>
+          </div>
+          <div class="custom-control custom-radio">
+            <input type="radio" id="customRadio3" name="customRadio" class="custom-control-input">
+            <label class="custom-control-label" for="customRadio3">Or toggle this other custom radio</label>
+          </div>
+        </div>
+
+      </div>
+
+
+
+      <div class="ask fixed-bottom mb-3">
+        <div class="d-flex justify-content-center">
+          <a class="button bg-dark" href="/askquestion"><svg class="bi bi-plus" id="plusicn" width="1.6em" height="1em"
+              viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd"
+                d="M8 3.5a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5H4a.5.5 0 0 1 0-1h3.5V4a.5.5 0 0 1 .5-.5z" />
+              <path fill-rule="evenodd" d="M7.5 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0V8z" />
+            </svg>
+          </a>
         </div>
       </div>
-      
     </div>
 
+    {%endblock%}
 
-
-    <div class="shadow p-3 mb-5 bg-white rounded">
-      <div class="question">
-      <strong>what  be done to universe in this pandamic situation?</strong>
+    {%block welcome%}
+    <div class="container my-3">
+      <div class="jumbotron p-4 p-md-5 text-white rounded bg-dark">
+        <div class="col-md-6 display-4 font-italic">
+          Welcome To VotersParadise
+        </div>
+        <p class="lead my-3">
+          Create Questions and polls.. ask questions To lead the imagination
+          Create polls of your own thoughts and lead the way
+        </p>
       </div>
-      <div class="answer">
-        <br>
-        <div class="custom-control custom-radio">
-          <input type="radio" id="customRadio" name="customRadio" class="custom-control-input">
-          <label class="custom-control-label" for="customRadio">Toggle this custom radio</label>
-        </div>
-        <div class="custom-control custom-radio">
-          <input type="radio" id="kaib" name="customRadio" class="custom-control-input">
-          <label class="custom-control-label" for="kaib">Or toggle this other custom radio</label>
-        </div>
-        <div class="custom-control custom-radio">
-          <input type="radio" id="customRadio3" name="customRadio" class="custom-control-input">
-          <label class="custom-control-label" for="customRadio3">Or toggle this other custom radio</label>
-        </div>
-      </div>
-  </div>
-</div>
+    </div>
+    {%endblock%}
+    {%block scripts%}
+      <script>
+        window.onscroll = function() {myFunction()};
 
-{%endblock%} 
+        var header = document.getElementById("head");
 
-{%block welcome%}
-<div class="container my-3">
-  <div class="jumbotron p-4 p-md-5 text-white rounded bg-dark">
-    <div class="col-md-6 display-4 font-italic">
-      Welcome To VotersParadise
-    </div> 
-    <p class="lead my-3">
-      Create Questions and polls.. ask questions To lead the imagination 
-      Create polls of your own thoughts and lead the way
-    </p>
-  </div>
-</div>
-{%endblock%}
-{%block scripts%}
-<script>
-window.onscroll = function() {myFunction()};
+        var sticky = header.offsetTop;
 
-var header = document.getElementById("head");
-var sticky = header.offsetTop;
-
-function myFunction() {
-  if (window.pageYOffset > sticky) {
-    header.classList.add("sticky");
-  } else {
-    header.classList.remove("sticky");
-  }
-}
-</script>
-{%endblock%}
+        function myFunction() {
+          if (window.pageYOffset > sticky) {
+            header.classList.add("sticky");
+          } else {
+            header.classList.remove("sticky");
+          }
+        }
+      </script>
+    {%endblock%}
