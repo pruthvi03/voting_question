@@ -92,9 +92,12 @@ def search(request):
     if request.user.is_authenticated:
         query = request.GET['search']
         querysearch = User.objects.filter(username__icontains = query).exclude(username__exact = request.user).all()
-        
+        following = UserFollowing.objects.filter(user__exact = request.user).count()
+        followers = UserFollowing.objects.filter(following__exact = request.user).count()
         params = {
-            'result': querysearch
+            'result': querysearch,
+            'following':following,
+            'followers':followers,
         }
         return render(request,'search.html',params)
     else:
