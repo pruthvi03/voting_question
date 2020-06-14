@@ -13,5 +13,5 @@ urlpatterns = [
   path(r"followers",views.followers,name = "followers"),
   path(r"follow",views.follow,name = "follow"),
   path(r"askquestion",views.askquestion,name="askquestion"),
-
+  path(r"unfollow",views.unfollow,name = "unfollow")
 ]

@@ -153,8 +153,10 @@
       <div class="modal-body">
 
         <form method="POST" action="{% url 'signup'%}" autocomplete="on">
+          {% csrf_token %}
 
           <div class="form-group">
+
             <label for="signupemaillab">Email address</label>
             <input type="email" required class="form-control" name="semail" aria-describedby="emailHelp"
               placeholder="Enter E-mail">
@@ -184,7 +186,6 @@
             <label for="passwordinput2">Confirm Password</label>
             <input type="password" required class="form-control" name="spassword2" placeholder="Re-enter Password">
           </div>
-          {% csrf_token %}
           <button type="submit" class="btn btn-primary float-right">Submit</button>
 
         </form>
