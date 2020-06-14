@@ -31,6 +31,18 @@ def signup(request):
         password =request.POST['spassword']
         password2 = request.POST['spassword2']
 
+        try:
+            user = User.objects.get(username__exact = username)
+            messages.error(request,"Username should be unique.")
+            return redirect('home')
+        except:
+            pass
+        try:
+            email = User.objects.get(email__exact = email)
+            messages.error(request,"This email id is already in use")
+            return redirect('home')
+        except:
+            pass
         # add parameters checking prog   
         if len(username) > 10:
             messages.error(request,"Username must be under 10 characters")
@@ -41,8 +53,6 @@ def signup(request):
             messages.error(request,"passwords do not match")
             return redirect('home')
         
-        if username.isalnum():
-            messages.error(request,"do no include numbers in username")
         # make user 
         myuser = User.objects.create_user(username ,email ,password)
         myuser.first_name = firstname
