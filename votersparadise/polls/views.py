@@ -67,18 +67,22 @@ def handlelogin(request):
     if request.method == 'POST':
         password = request.POST['lpassword']
         email = request.POST['lemail']
-        username = User.objects.get(email=email.lower()).username
+        try:
+            username = User.objects.get(email=email.lower()).username
 
-        user = authenticate(username = username, password = password)
-        if user is not None:
-            login(request, user)
-            messages.success(request,"succesfully logged in.")
-            return redirect('home')
-        
-        else:
-            messages.error(request, "Invalid Credentials , please try again")
-            return redirect('home')
-    
+            user = authenticate(username = username, password = password)
+            if user is not None:
+                login(request, user)
+                messages.success(request,"succesfully logged in.")
+                return redirect('home')
+            
+            else:
+                messages.error(request, "Invalid Credentials , please try again")
+                return redirect('home')
+        except:
+                messages.error(request, "Invalid Credentials , please try again")
+                return redirect('home')
+                
 def handlelogout(request):
     logout(request)
     messages.success(request, "Logout Succesfully.")
