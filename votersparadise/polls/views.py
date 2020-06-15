@@ -4,6 +4,13 @@ from django.shortcuts import HttpResponse,redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate ,login ,logout
 from polls.models import UserFollowing,QuestionTable,Groupcode
+
+from django.contrib.sites.shortcuts import get_current_site
+from django.template.loader import render_to_string
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes, force_text
+from .tokens import account_activation_token
+from django.core.mail import EmailMessage
 # Create your views here.
 
 
@@ -57,11 +64,44 @@ def signup(request):
         myuser = User.objects.create_user(username ,email ,password)
         myuser.first_name = firstname
         myuser.last_name = lastname
+        myuser.is_active = False
         myuser.save()
         messages.success(request, 'Profile is created.')
+
+        current_site = get_current_site(request)
+
+        body_msg = render_to_string('acc_active_email.html', {
+                'user':myuser, 'domain':current_site.domain,
+                'uid': urlsafe_base64_encode(force_bytes(myuser.pk)),
+                'token': account_activation_token.make_token(myuser),
+            })
+        
+        # Sending activation link in terminal
+        # user.email_user(subject, message)
+        mail_subject = 'Activate your voting account.'
+        # to_email = form.cleaned_data.get('email')
+        send_email = EmailMessage(mail_subject, body_msg, to=[email])
+        send_email.send()
+
+
         return redirect('home')
     else:
         return HttpResponse("Error 404")
+
+def activate(request, uidb64, token):
+    try:
+        uid = force_text(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+    if user is not None and account_activation_token.check_token(user, token):
+        user.is_active = True
+        user.save()
+        login(request, user)
+        messages.success(request,"Email verified!!!. Succesfully logged in.")
+        return redirect('home')
+    else:
+        return HttpResponse('Activation link is invalid!')
         
 def handlelogin(request):
     if request.method == 'POST':
@@ -69,8 +109,14 @@ def handlelogin(request):
         email = request.POST['lemail']
         try:
             username = User.objects.get(email=email.lower()).username
-
+            user_active = User.objects.get(email=email.lower()).is_active
+            
+            if user_active is False:
+                messages.error(request,"Please confirm your email. Email verification link has sent to your account.")
+                return redirect('home')
+            
             user = authenticate(username = username, password = password)
+
             if user is not None:
                 login(request, user)
                 messages.success(request,"succesfully logged in.")
@@ -80,8 +126,8 @@ def handlelogin(request):
                 messages.error(request, "Invalid Credentials , please try again")
                 return redirect('home')
         except:
-                messages.error(request, "Invalid Credentials , please try again")
-                return redirect('home')
+            messages.error(request, "Invalid Credentials , please try again")
+            return redirect('home')
                 
 def handlelogout(request):
     logout(request)

@@ -1,4 +1,5 @@
 from django.urls import path
+from django.conf.urls import url, include
 from . import views
 
 urlpatterns = [
@@ -13,5 +14,8 @@ urlpatterns = [
   path(r"followers",views.followers,name = "followers"),
   path(r"follow",views.follow,name = "follow"),
   path(r"askquestion",views.askquestion,name="askquestion"),
-  path(r"unfollow",views.unfollow,name = "unfollow")
+  path(r"unfollow",views.unfollow,name = "unfollow"),
+
+  url(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+        views.activate, name='activate'),
 ]
