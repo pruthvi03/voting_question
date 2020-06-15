@@ -210,7 +210,6 @@ def unfollow(request):
         tounfollow = request.GET["unfollowuser"]
         myid = request.user
         query = request.GET["query"]
-        print("000000000000000000",query)
         finunfollow = User.objects.get(username__exact = tounfollow)
         obj = UserFollowing.objects.get(user = myid,following = finunfollow)
         obj.delete()
@@ -218,4 +217,11 @@ def unfollow(request):
         return HttpResponse('saru')
 
 def askquestion(request):
-    pass
+
+    followingnum = UserFollowing.objects.filter(user__exact = request.user).count()
+    followers = UserFollowing.objects.filter(following__exact = request.user).count()
+    params = {
+        'following':followingnum,
+        'followers':followers,
+    }
+    return render(request,"askque.html",params)

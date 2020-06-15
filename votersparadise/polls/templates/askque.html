@@ -1,0 +1,94 @@
+{% extends 'layout.html' %}
+
+{% block title %}{{request.user|truncatechars:10}}'s Followers{% endblock %}
+
+{%block style%}
+<style>
+    @media (min-width: 768px) .container,
+    .container-md,
+    .container-sm {
+        max-width: 720px;
+    }
+
+    @media (min-width: 576px) .container,
+    .container-sm {
+        max-width: 540px;
+    }
+
+    @media (min-width: 768px) .container {
+        max-width: 720px;
+    }
+
+    @media (min-width: 576px) .container {
+        max-width: 540px;
+    }
+
+    .profilepic {
+        margin: 0 auto 0 auto;
+    }
+
+    .container {
+        width: 100%;
+        padding-right: 15px;
+        padding-left: 15px;
+        margin-right: auto;
+        margin-left: auto;
+    }
+</style>
+{%endblock%}
+{%block navbar%}
+<div class="dropdown">
+    <button class="btn btn-info dropdown-toggle ml-2" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+        aria-haspopup="true" aria-expanded="false">
+        Settings
+    </button>
+    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+        <div class="col">
+            <div class="d-flex justify-content-center my-2">
+                <div class="d-flex flex-column">
+
+                    <div class="profilepic">
+                        <img class="rounded-circle" width="40px" height="40px"
+                            src="{{request.user.name.profile_pic.url}}">
+                    </div>
+                    <div class="profilename">
+                        <strong>Hello, {{request.user |truncatechars:10}}</strong>
+                    </div>
+                </div>
+            </div>
+            <div class="entity">
+                <a class="dropdown-item border rounded my-1" href="/profile">Profile<svg
+                        class="bi bi-person-fill ml-1 mb-1" width="1em" height="1em" viewBox="0 0 16 16"
+                        fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                            d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+                    </svg></a>
+
+                <a class="dropdown-item border rounded my-1 text-left" href="/following">Following<strong>
+                        {{following}}</strong></a>
+                <a class="dropdown-item border rounded my-1" href="/followers">Followers<strong>
+                        {{followers}}</strong></a>
+                <a class="dropdown-item border rounded my-1" href="/logout">Logout</a>
+            </div>
+
+        </div>
+    </div>
+</div>
+{%endblock%}
+
+{%block question%}
+<div class="container">
+    <div class="row" id="head">
+        <div class="col">
+            <div class="bg-dark p-3 my-3 text-white-50 rounded shadow-sm">
+                <h3>Question:</h3>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        
+    </div>
+</div>
+
+
+{%endblock%}
