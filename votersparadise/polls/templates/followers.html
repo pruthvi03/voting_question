@@ -34,6 +34,28 @@
         margin-right: auto;
         margin-left: auto;
     }
+    .items{
+        flex-wrap: wrap;
+        order: 3;
+    }
+    .card{
+        margin:20px 20px 20px 20px;
+
+    }
+    .img{
+        margin: 0 auto 0 auto;
+    }
+    .txt{
+        margin:auto 0 auto 0;
+    }
+    .info{
+        margin: 0 auto 0 auto;
+    }
+    .colll{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
     
 </style>
 {%endblock%}
@@ -86,33 +108,36 @@
         </div>
     </div>
     <div class="row">
-        <div class="col">
+    <div class="colll">
             {% if result %}
             {% for user in result %}
+            <div class="shadow p-3 bg-white rounded card">
+                <div class="items img">
+                    <img class="rounded-circle mr-2" width="80px" height="80px"
+                        src="{{user.following.name.profile_pic.url}}">
+                </div>
+                <div class="items txt">
+                    <p>Username:<strong>{{user.following}}</strong></p>
+                    <p>Full name:<strong>{{user.following.first_name}} {{user.following.last_name}}</strong></p>
+                    <p>Date of Join:<strong>{{user.following.date_joined.date}}</strong></p>
+                </div>
 
-            <div class="shadow p-3 mb-5 bg-white rounded">
-                <div class="d-flex flex-row">
-                        <img class="rounded-circle mr-2" width="40px" height="40px"
-                            src="{{user.following.name.profile_pic.url}}">
-                    <div class="user d-flex justify-content-between flex-fill mt-2">
+                <div class="items info">
+                    <form action="removeuser" method="POST">
+                        <input type="hidden" id="removeusername" name="removeusername" value="{{user.username}}">
 
-                        <p>Username:<strong>{{user.following}}</strong></p>
-                        <p>Full name:<strong>{{user.following.first_name}} {{user.following.last_name}}</strong></p>
-                        <p>Date of Join:<strong>{{user.following.date_joined.date}}</strong></p>
-                    </div>
-                    
-                    <div class="flex-fill d-flex justify-content-end">
-                        <form action="userprofile" method="POST">
-                            <input type="hidden" value="{{user.username}}">
+                        <button type="submit" class="btn btn-info mb-1">Remove</button>
+                        
+                        <a class="btn btn-primary" href="userprofile">More Info</a>
 
-                            <button type="button" class="btn btn-info"> More Info</button>
-
-                        </form>
-                    </div>
+                    </form>
                 </div>
             </div>
+            
             {% endfor %}
+        </div>
             {%else%}
+            <div class="col">
             <div class="row" id="head">
                 <div class="col">
                     <div class="bg-dark p-3 my-3 text-white-50 rounded shadow-sm">
@@ -120,10 +145,10 @@
                     </div>
                 </div>
             </div>
+        </div>
             {% endif %}
 
 
-        </div>
     </div>
 
 

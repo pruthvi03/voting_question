@@ -206,10 +206,10 @@ def follow(request):
         return redirect('/search?search='+query)
 
 def unfollow(request):
-    if request.method == 'GET':
-        tounfollow = request.GET["unfollowuser"]
+    if request.method == 'POST':
+        tounfollow = request.POST["unfollowuser"]
         myid = request.user
-        query = request.GET["query"]
+        query = request.POST["query"]
         finunfollow = User.objects.get(username__exact = tounfollow)
         obj = UserFollowing.objects.get(user = myid,following = finunfollow)
         obj.delete()
@@ -225,3 +225,10 @@ def askquestion(request):
         'followers':followers,
     }
     return render(request,"askque.html",params)
+
+def removeuser(request):
+    if request.method == 'POST':
+        toremove = request.POST["removeusername"]
+        name = UserFollowing.objects.filter(following__exact = request.user).filter(user__exact = toremove).get()
+        name.delete()
+        return redirect("followers")

@@ -15,6 +15,7 @@ urlpatterns = [
   path(r"follow",views.follow,name = "follow"),
   path(r"askquestion",views.askquestion,name="askquestion"),
   path(r"unfollow",views.unfollow,name = "unfollow"),
+  path(r"removeuser",views.removeuser,name="removeuser"),
 
   url(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
         views.activate, name='activate'),
