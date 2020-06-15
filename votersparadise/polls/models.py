@@ -1,11 +1,16 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+class UserInfo(models.Model):
+    profile_pic = models.ImageField(default = "profilepic.png",blank=True,null=True)
+    name = models.OneToOneField(User,on_delete = models.CASCADE,related_name="name")
+    
+    def __str__(self):
+       return self.name.username
 
 class UserFollowing(models.Model):
     user = models.ForeignKey(User ,on_delete=models.CASCADE, related_name = 'user', blank=True, null=True)
     following = models.ForeignKey(User ,on_delete=models.CASCADE, related_name = 'following', blank=True, null=True)
-    profile_pic = models.ImageField(upload_to = "polls/profile_pic" , default = "",blank=True)
     created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
