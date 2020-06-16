@@ -4,24 +4,34 @@
 
 {%block style%}
 <style>
-  @media (min-width: 768px) .container,
-  .container-md,
-  .container-sm {
-    max-width: 720px;
+  .avatar {
+    border: 0.3rem solid rgba(#fff, 0.3);
+    margin-top: -6rem;
+    margin-bottom: 1rem;
+    max-width: 9rem;
   }
 
-  @media (min-width: 576px) .container,
-  .container-sm {
-    max-width: 540px;
+  .info_class{
+    float: right;
   }
 
-  @media (min-width: 768px) .container {
-    max-width: 720px;
+  @media (max-width: 600px){ 
+    
+    .card-img-top {
+    height: 0px;
+    width: 0px;
+    }
+    .avatar{
+      float: left;
+      height: 60px;
+      width: 60px;
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+    
+
   }
 
-  @media (min-width: 576px) .container {
-    max-width: 540px;
-  }
 
 
   .container {
@@ -31,6 +41,8 @@
     margin-right: auto;
     margin-left: auto;
   }
+
+
 </style>
 {%endblock%}
 {%block navbar%}
@@ -75,35 +87,39 @@
       </div>
     </div>
   </div>
-  <div class="row">
-    <div class="col">
-      {% if result %}
-      {% for user in result %}
+  <div class="row row-cols-1 row-cols-md-4">
     
-      <div class="shadow p-3 mb-5 bg-white rounded">
-      <div class="d-flex flex-row">
-        <div class="user d-flex justify-content-between flex-fill">
-          <p>Username:<strong>{{user.username}}</strong></p>
-          <p>Full name:<strong>{{user.first_name}}{{user.last_name}}</strong></p>
-          <p>Date of Join:<strong>{{user.date_joined.date}}</strong></p>
-        </div>
-
-        <div class="flex-fill d-flex justify-content-end">
-          <form action="userprofile" method="POST">
-            <input type="hidden" value="{{user.username}}">
-
-            <button type="button" class="btn btn-info"> More Info</button>
-
-          </form>
-        </div>
+    {% if result %}
+    {% for user in result %}
+    <div class="col mb-4">
+    
+    <div class="card">
+      <img src="https://i.stack.imgur.com/vhoa0.jpg" class="card-img-top" alt="..." height="100px" width="50px">
+      <div class="card-body text-center">
+        <img class="avatar rounded-circle" src="https://mdbootstrap.com/img/Photos/Avatars/img%20%2810%29.jpg" alt="Bologna">
+        <h5 class="card-title">{{user.username}}</h5>
+        <p class="card-text">{{user.first_name}} {{user.last_name}}</p>
       </div>
+      <div class="card-footer">
+        <small class="text-muted">Date of Join: <strong>{{user.date_joined.date}}</strong></small>
+        
+        <form class="info_class" action="userprofile" method="POST">
+          <input type="hidden" value="{{user.username}}">
+
+          <button type="button" class="btn btn-outline-info"> More Info</button>
+
+        </form>
+        
+
       </div>
-      {% endfor %}
-      {% endif %}
-
-
     </div>
-  </div>
+  </div>  
+    {% endfor %}
+    {% endif %}
+
+
+  
+</div>
 
 
   {%endblock%}
