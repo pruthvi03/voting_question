@@ -4,30 +4,35 @@
 
 {%block style%}
 <style>
-    @media (min-width: 768px) .container,
-    .container-md,
-    .container-sm {
-        max-width: 720px;
+    .avatar {
+        border: 0.3rem solid rgba(#fff, 0.3);
+        margin-top: -6rem;
+        margin-bottom: 1rem;
+        max-width: 9rem;
     }
 
-    @media (min-width: 576px) .container,
-    .container-sm {
-        max-width: 540px;
-    }
 
-    @media (min-width: 768px) .container {
-        max-width: 720px;
-    }
 
-    @media (min-width: 576px) .container {
-        max-width: 540px;
-    
-    
-}
-    
+    @media (max-width: 600px) {
+
+        .card-img-top {
+            height: 0px;
+            width: 0px;
+        }
+
+        .avatar {
+            float: left;
+            height: 60px;
+            width: 60px;
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+
+
+    }
 
     .profilepic {
-        margin: 0 auto 0 auto;
+        margin: 0px auto 0px auto;
     }
 
     .container {
@@ -36,28 +41,6 @@
         padding-left: 15px;
         margin-right: auto;
         margin-left: auto;
-    }
-    .items{
-        flex-wrap: wrap;
-        order: 3;
-    }
-    .card{
-        margin:20px 20px 20px 20px;
-
-    }
-    .img{
-        margin: 0 auto 0 auto;
-    }
-    .txt{
-        margin:auto 0 auto 0;
-    }
-    .info{
-        margin: 0 auto 0 auto;
-    }
-    .colll{
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
     }
 </style>
 {%endblock%}
@@ -110,37 +93,43 @@
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="colll">
+    <div class="row row-cols-1 row-cols-md-4">
 
         {% if result %}
         {% for user in result %}
-            <div class="shadow p-3 bg-white rounded card">
-                <div class="items img">
-                    <img class="rounded-circle mr-2" width="80px" height="80px"
-                        src="{{user.following.name.profile_pic.url}}">
+        <div class="col mb-4">
+
+            <div class="card">
+                <img src="https://i.stack.imgur.com/vhoa0.jpg" class="card-img-top" alt="..." height="100px"
+                    width="50px">
+                <div class="card-body text-center">
+                    <img class="avatar rounded-circle" src="{{user.following.name.profile_pic.url}}" alt="userImage">
+                    <h5 class="card-title">{{user.following}}</h5>
+                    <p class="card-text">{{user.following.first_name}} {{user.following.last_name}}</p>
                 </div>
-                <div class="items txt">
-                    <p>Username:<strong>{{user.following}}</strong></p>
-                    <p>Full name:<strong>{{user.following.first_name}} {{user.following.last_name}}</strong></p>
-                    <p>Date of Join:<strong>{{user.following.date_joined.date}}</strong></p>
-                </div>
+                <small class="text-muted">Date of Join: <strong>{{user.following.date_joined.date}}</strong></small>
 
-                <div class="items info">
-                    <form action="unfollow" method="POST">
-                        <input type="hidden" value="{{user.username}}">
+                <div class="card-footer d-flex justify-content-center">
 
-                        <button type="submit" class="btn btn-info mb-1">Unfollow</button>
-                        
-                        <a class="btn btn-primary" href="userprofile">More Info</a>
+                    <form class="info_class" action="unfollow" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" id="unfollowuser" name="unfollowuser" value="{{user}}">
 
+                        <button type="submit" class="btn btn-outline-danger infobtn">Unfollow</button>
+                        <a class="btn btn-outline-info" href="userprofile">More Info</a>
                     </form>
+
+
                 </div>
             </div>
+        </div>
         {% endfor %}
-    </div>
 
-        {%else%}
+
+
+    </div>
+    {%else%}
+    <div class="row">
         <div class="col">
             <div class="row" id="head">
                 <div class="col">
@@ -150,10 +139,11 @@
                 </div>
             </div>
         </div>
-        {% endif %}
-
-
     </div>
+    {% endif %}
 
 
-    {%endblock%}
+</div>
+
+
+{%endblock%}

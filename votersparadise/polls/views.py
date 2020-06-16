@@ -168,18 +168,18 @@ def following(request):
 def followers(request):
     try:
         followingnum = UserFollowing.objects.filter(user__exact = request.user).count()
-        followers = UserFollowing.objects.filter(following__exact = request.user).count()
-        print("00000000000000000",followingnum,followers)
-        followers = UserFollowing.object.filter(following__exact = request.user).all()
+        followersnum = UserFollowing.objects.filter(following__exact = request.user).count()
+        followers = UserFollowing.objects.filter(following__exact = request.user).all()
         params = {
             'result':followers,
             'following':followingnum,
-            'followers':followers,
+            'followers':followersnum,
         }
         return render(request,"followers.html",params)
     except:
         followingnum = UserFollowing.objects.filter(user__exact = request.user).count()
         followers = UserFollowing.objects.filter(following__exact = request.user).count()
+
         params = {
             'following':followingnum,
             'followers':followers,
@@ -209,12 +209,11 @@ def unfollow(request):
     if request.method == 'POST':
         tounfollow = request.POST["unfollowuser"]
         myid = request.user
-        query = request.POST["query"]
-        finunfollow = User.objects.get(username__exact = tounfollow)
+        finunfollow = User.objects.filter(username__exact = tounfollow).get()
         obj = UserFollowing.objects.get(user = myid,following = finunfollow)
         obj.delete()
      
-        return HttpResponse('saru')
+        return redirect('following')
 
 def askquestion(request):
 
@@ -229,6 +228,8 @@ def askquestion(request):
 def removeuser(request):
     if request.method == 'POST':
         toremove = request.POST["removeusername"]
-        name = UserFollowing.objects.filter(following__exact = request.user).filter(user__exact = toremove).get()
+        finalremove = User.objects.filter(username__exact = toremove).get()
+        myrid = request.user
+        name = UserFollowing.objects.get(user =finalremove ,following = myrid)
         name.delete()
         return redirect("followers")

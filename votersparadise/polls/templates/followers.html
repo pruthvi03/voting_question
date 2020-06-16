@@ -4,60 +4,45 @@
 
 {%block style%}
 <style>
-    @media (min-width: 768px) 
-    .container,
-    .container-md,
-    .container-sm {
-        max-width: 720px;
+    .avatar {
+      border: 0.3rem solid rgba(#fff, 0.3);
+      margin-top: -6rem;
+      margin-bottom: 1rem;
+      max-width: 9rem;
     }
-
-    @media (min-width: 576px) .container,
-    .container-sm {
-        max-width: 540px;
-    }
-
-    @media (min-width: 768px) .container {
-        max-width: 720px;
-    }
-
-    @media (min-width: 576px) .container {
-        max-width: 540px;
-    }
-    .profilepic {
-    margin: 0 auto 0 auto;
-  }
-
-    .container {
-        width: 100%;
-        padding-right: 15px;
-        padding-left: 15px;
-        margin-right: auto;
-        margin-left: auto;
-    }
-    .items{
-        flex-wrap: wrap;
-        order: 3;
-    }
-    .card{
-        margin:20px 20px 20px 20px;
-
-    }
-    .img{
-        margin: 0 auto 0 auto;
-    }
-    .txt{
-        margin:auto 0 auto 0;
-    }
-    .info{
-        margin: 0 auto 0 auto;
-    }
-    .colll{
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
+  
+  
+  
+    @media (max-width: 600px) {
+  
+      .card-img-top {
+        height: 0px;
+        width: 0px;
+      }
+  
+      .avatar {
+        float: left;
+        height: 60px;
+        width: 60px;
+        margin-top: 0;
+        margin-bottom: 0;
+      }
+  
+  
     }
     
-</style>
+    .profilepic {
+      margin: 0px auto 0px auto;
+    }
+  
+    .container {
+      width: 100%;
+      padding-right: 15px;
+      padding-left: 15px;
+      margin-right: auto;
+      margin-left: auto;
+    }
+    </style>
 {%endblock%}
 {%block navbar%}
 <div class="dropdown">
@@ -87,7 +72,8 @@
                             d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
                     </svg></a>
 
-                <a class="dropdown-item border rounded my-1 text-left" href="/following">Following<strong>{{following}}</strong></a>
+                <a class="dropdown-item border rounded my-1 text-left"
+                    href="/following">Following<strong>{{following}}</strong></a>
                 <a class="dropdown-item border rounded my-1" href="/followers">Followers<strong>
                         {{followers}}</strong></a>
                 <a class="dropdown-item border rounded my-1" href="/logout">Logout</a>
@@ -107,37 +93,44 @@
             </div>
         </div>
     </div>
-    <div class="row">
-    <div class="colll">
-            {% if result %}
-            {% for user in result %}
-            <div class="shadow p-3 bg-white rounded card">
-                <div class="items img">
-                    <img class="rounded-circle mr-2" width="80px" height="80px"
-                        src="{{user.following.name.profile_pic.url}}">
+    <div class="row row-cols-1 row-cols-md-4">
+
+        {% if result %}
+        {% for user in result %}
+        <div class="col mb-4">
+
+            <div class="card">
+                <img src="https://i.stack.imgur.com/vhoa0.jpg" class="card-img-top" alt="..." height="100px"
+                    width="50px">
+                <div class="card-body text-center">
+                    <img class="avatar rounded-circle" src="{{user.user.name.profile_pic.url}}" alt="userImage">
+                    <h5 class="card-title">{{user.user.username}}</h5>
+                    <p class="card-text">{{user.user.first_name}} {{user.user.last_name}}</p>
                 </div>
-                <div class="items txt">
-                    <p>Username:<strong>{{user.following}}</strong></p>
-                    <p>Full name:<strong>{{user.following.first_name}} {{user.following.last_name}}</strong></p>
-                    <p>Date of Join:<strong>{{user.following.date_joined.date}}</strong></p>
-                </div>
+                <small class="text-muted">Date of Join: <strong>{{user.user.date_joined.date}}</strong></small>
 
-                <div class="items info">
-                    <form action="removeuser" method="POST">
-                        <input type="hidden" id="removeusername" name="removeusername" value="{{user.username}}">
+                <div class="card-footer d-flex justify-content-center">
 
-                        <button type="submit" class="btn btn-info mb-1">Remove</button>
-                        
-                        <a class="btn btn-primary" href="userprofile">More Info</a>
+                    <form class="info_class" action="removeuser" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" id="removeusername" name="removeusername" value="{{user.user}}">
 
+                        <button type="submit" class="btn btn-outline-danger infobtn">Remove</button>
+                        <a class="btn btn-outline-info" href="userprofile">More Info</a>
                     </form>
+
+
                 </div>
             </div>
-            
-            {% endfor %}
         </div>
-            {%else%}
-            <div class="col">
+        {% endfor %}
+
+
+
+    </div>
+    {%else%}
+    <div class="row">
+        <div class="col">
             <div class="row" id="head">
                 <div class="col">
                     <div class="bg-dark p-3 my-3 text-white-50 rounded shadow-sm">
@@ -146,10 +139,11 @@
                 </div>
             </div>
         </div>
-            {% endif %}
-
-
     </div>
+    {% endif %}
 
 
-    {%endblock%}
+</div>
+
+
+{%endblock%}
