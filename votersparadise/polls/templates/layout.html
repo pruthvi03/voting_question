@@ -84,9 +84,14 @@
 </head>
 <body>
   {% if user.is_authenticated %}
+    {%block profile%}
+    {%endblock%}
 
     {%block question%}
     {%endblock%}
+
+
+
   {%else%}
 
     {%block welcome%}

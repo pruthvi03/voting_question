@@ -187,11 +187,11 @@ def followers(request):
         return render(request,"followers.html",params)
 
 def profile(request):
-    userinfo = User.object.filter(username__exact = request.user).get()
+    userinfo = User.objects.filter(username__exact = request.user).get()
     params = {
         'result':userinfo,
     }
-    return render(request,"profile.html",params)
+    return render(request,"profile3.html",params)
 
 def follow(request):
     if request.method== 'GET':
