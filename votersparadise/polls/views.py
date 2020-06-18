@@ -202,6 +202,12 @@ def follow(request):
         addfollowing = UserFollowing(user = myid, following = finfollow)
 
         addfollowing.save()
+        everyinfos = User.objects.filter(username__exact = tofollow).get()
+        text = 'Unfollow'
+        params = {
+            'result':everyinfos,
+            'text':text,
+        }
         return redirect('userprofile')
     else:
         return HttpResponse('404 Error')
