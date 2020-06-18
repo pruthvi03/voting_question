@@ -194,16 +194,18 @@ def profile(request):
     return render(request,"profile3.html",params)
 
 def follow(request):
-    if request.method== 'GET':
-        tofollow = request.GET["usernameoffollower"]
+    if request.method== 'POST':
+        tofollow = request.POST["usernameoffollower"]
         myid = request.user
-        query = request.GET["query"]
 
         finfollow = User.objects.get(username__exact = tofollow)
         addfollowing = UserFollowing(user = myid, following = finfollow)
 
         addfollowing.save()
-        return redirect('/search?search='+query)
+        return redirect('userprofile')
+    else:
+        return HttpResponse('404 Error')
+
 
 def unfollow(request):
     if request.method == 'POST':
@@ -214,6 +216,8 @@ def unfollow(request):
         obj.delete()
      
         return redirect('following')
+    else:
+        return HttpResponse('404 Error')
 
 def askquestion(request):
 
@@ -233,3 +237,27 @@ def removeuser(request):
         name = UserFollowing.objects.get(user =finalremove ,following = myrid)
         name.delete()
         return redirect("followers")
+    else:
+        return HttpResponse('404 error')
+
+def userprofile(request):
+    
+    if request.method == 'POST':
+        userprofile = request.POST['profilename']
+        everyinfos = User.objects.filter(username__exact = userprofile).get()
+        followingnum = UserFollowing.objects.filter(user__exact = request.user).count()
+        followers = UserFollowing.objects.filter(following__exact = request.user).count()
+        userfollowing = UserFollowing.objects.filter(user__exact = everyinfos).count()
+        userfollowers = UserFollowing.objects.filter(following__exact = everyinfos).count()
+        
+        params = {
+            'result':everyinfos,
+            'following':followingnum,
+            'followers':followers,
+            'userfollowing':userfollowing,
+            'userfollowers':userfollowers,
+        }
+        return render(request,"profile3.html",params)
+
+    else:
+        pass

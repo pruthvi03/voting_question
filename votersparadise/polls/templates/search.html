@@ -25,9 +25,10 @@
       <div class="card-footer d-flex justify-content-center">
 
         <form class="info_class" action="userprofile" method="POST">
-          <input type="hidden" value="{{user.username}}">
+          {% csrf_token %}
+          <input type="hidden" id="profilename" name="profilename" value="{{user.username}}">
 
-          <button type="button" class="btn btn-outline-info infobtn"> More Info</button>
+          <button type="submit" class="btn btn-outline-info infobtn"> More Info</button>
 
         </form>
 

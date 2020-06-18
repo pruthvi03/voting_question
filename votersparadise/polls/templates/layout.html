@@ -83,9 +83,11 @@
 {%endblock%}
 </head>
 <body>
+
+  {%block profile%}
+  {%endblock%}
   {% if user.is_authenticated %}
-    {%block profile%}
-    {%endblock%}
+    
 
     {%block question%}
     {%endblock%}
