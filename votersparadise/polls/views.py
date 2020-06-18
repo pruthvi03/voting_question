@@ -195,7 +195,7 @@ def profile(request):
 
 def follow(request):
     if request.method== 'POST':
-        tofollow = request.POST["usernameoffollower"]
+        tofollow = request.POST["followname"]
         myid = request.user
 
         finfollow = User.objects.get(username__exact = tofollow)
@@ -244,20 +244,42 @@ def userprofile(request):
     
     if request.method == 'POST':
         userprofile = request.POST['profilename']
+        idofuser = request.POST['idofuser']
         everyinfos = User.objects.filter(username__exact = userprofile).get()
-        followingnum = UserFollowing.objects.filter(user__exact = request.user).count()
-        followers = UserFollowing.objects.filter(following__exact = request.user).count()
-        userfollowing = UserFollowing.objects.filter(user__exact = everyinfos).count()
-        userfollowers = UserFollowing.objects.filter(following__exact = everyinfos).count()
+        try:
+            jem = UserFollowing.objects.filter(user__exact = request.user,following__exact = idofuser).get()        
+            followingnum = UserFollowing.objects.filter(user__exact = request.user).count()
+            followers = UserFollowing.objects.filter(following__exact = request.user).count()
+            userfollowing = UserFollowing.objects.filter(user__exact = everyinfos).count()
+            userfollowers = UserFollowing.objects.filter(following__exact = everyinfos).count()
+            text = 'Unfollow'
+            params = {
+                'result':everyinfos,
+                'following':followingnum,
+                'followers':followers,
+                'userfollowing':userfollowing,
+                'userfollowers':userfollowers,
+                'text':text,
+            }
+            return render(request,"profile3.html",params)
+        except:
+
+            everyinfos = User.objects.filter(username__exact = userprofile).get()
+            followingnum = UserFollowing.objects.filter(user__exact = request.user).count()
+            followers = UserFollowing.objects.filter(following__exact = request.user).count()
+            userfollowing = UserFollowing.objects.filter(user__exact = everyinfos).count()
+            userfollowers = UserFollowing.objects.filter(following__exact = everyinfos).count()
+            text='Follow'
+            params = {
+                'result':everyinfos,
+                'following':followingnum,
+                'followers':followers,
+                'userfollowing':userfollowing,
+                'userfollowers':userfollowers,
+                'text':text,
+            }
+            return render(request,"profile3.html",params)
         
-        params = {
-            'result':everyinfos,
-            'following':followingnum,
-            'followers':followers,
-            'userfollowing':userfollowing,
-            'userfollowers':userfollowers,
-        }
-        return render(request,"profile3.html",params)
 
     else:
         pass

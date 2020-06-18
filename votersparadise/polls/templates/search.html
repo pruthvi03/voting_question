@@ -27,7 +27,7 @@
         <form class="info_class" action="userprofile" method="POST">
           {% csrf_token %}
           <input type="hidden" id="profilename" name="profilename" value="{{user.username}}">
-
+          <input type="hidden" id="idofuser" name="idofuser" value="{{user.id}}">
           <button type="submit" class="btn btn-outline-info infobtn"> More Info</button>
 
         </form>
