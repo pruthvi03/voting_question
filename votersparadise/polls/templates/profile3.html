@@ -83,11 +83,19 @@
                                 </div>
 
                             </div>
+                            {%if text == 'Unfollow'%}
+                            <form action="unfollow" method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" id="unfollowuser" name="unfollowuser" value="{{result.username}}">
+                                <button class="btn btn-primary" type="submit">{{text}}</button>
+                            </form>
+                            {%else%}
                             <form action="follow" method="POST">
                                 {% csrf_token %}
                                 <input type="hidden" id="followname" name="followname" value="{{result.username}}">
                                 <button class="btn btn-primary" type="submit">{{text}}</button>
                             </form>
+                            {%endif%}
                         </div>
                     </div>
                 </div>

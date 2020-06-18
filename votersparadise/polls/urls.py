@@ -12,12 +12,12 @@ urlpatterns = [
   path(r"search",views.search,name = "search"),
   path(r"following",views.following,name = "following"),
   path(r"followers",views.followers,name = "followers"),
-  path(r"follow",views.follow,name = "follow"),
+  path(r"userprofile/follow",views.follow,name = "follow"),
   path(r"askquestion",views.askquestion,name="askquestion"),
-  path(r"unfollow",views.unfollow,name = "unfollow"),
+  path(r"userprofile/unfollow",views.unfollow,name = "unfollow"),
   path(r"removeuser",views.removeuser,name="removeuser"),
 
   url(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
         views.activate, name='activate'),
-  path(r"userprofile",views.userprofile,name="userprofile"),
+  path(r"userprofile/<username>",views.userprofile,name="userprofile"),
 ]

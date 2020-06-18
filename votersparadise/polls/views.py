@@ -4,6 +4,8 @@ from django.shortcuts import HttpResponse,redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate ,login ,logout
 from polls.models import UserFollowing,QuestionTable,Groupcode
+from django.http import HttpResponseRedirect
+
 
 from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
@@ -202,13 +204,8 @@ def follow(request):
         addfollowing = UserFollowing(user = myid, following = finfollow)
 
         addfollowing.save()
-        everyinfos = User.objects.filter(username__exact = tofollow).get()
-        text = 'Unfollow'
-        params = {
-            'result':everyinfos,
-            'text':text,
-        }
-        return redirect('userprofile')
+        
+        return redirect('userprofile',username =tofollow)
     else:
         return HttpResponse('404 Error')
 
@@ -220,8 +217,8 @@ def unfollow(request):
         finunfollow = User.objects.filter(username__exact = tounfollow).get()
         obj = UserFollowing.objects.get(user = myid,following = finunfollow)
         obj.delete()
-     
-        return redirect('following')
+
+        return redirect('userprofile',username = tounfollow)
     else:
         return HttpResponse('404 Error')
 
@@ -246,7 +243,7 @@ def removeuser(request):
     else:
         return HttpResponse('404 error')
 
-def userprofile(request):
+def userprofile(request,username):
     
     if request.method == 'POST':
         userprofile = request.POST['profilename']
@@ -288,4 +285,39 @@ def userprofile(request):
         
 
     else:
-        pass
+        everyinfos = User.objects.filter(username__exact = username).get()
+        idofuser = everyinfos.id
+        print(idofuser)
+        try:
+            jem = UserFollowing.objects.filter(user__exact = request.user,following__exact = idofuser).get()  
+            followingnum = UserFollowing.objects.filter(user__exact = request.user).count()
+            followers = UserFollowing.objects.filter(following__exact = request.user).count()
+            userfollowing = UserFollowing.objects.filter(user__exact = everyinfos).count()
+            userfollowers = UserFollowing.objects.filter(following__exact = everyinfos).count()
+            text = 'Unfollow'
+            params = {
+                'result':everyinfos,
+                'following':followingnum,
+                'followers':followers,
+                'userfollowing':userfollowing,
+                'userfollowers':userfollowers,
+                'text':text,
+            }
+            return render(request,"profile3.html",params)
+
+        except:
+            followingnum = UserFollowing.objects.filter(user__exact = request.user).count()
+            followers = UserFollowing.objects.filter(following__exact = request.user).count()
+            userfollowing = UserFollowing.objects.filter(user__exact = everyinfos).count()
+            userfollowers = UserFollowing.objects.filter(following__exact = everyinfos).count()
+            text='Follow'
+            params = {
+                'result':everyinfos,
+                'following':followingnum,
+                'followers':followers,
+                'userfollowing':userfollowing,
+                'userfollowers':userfollowers,
+                'text':text,
+            }
+            return render(request,"profile3.html",params)
+        
