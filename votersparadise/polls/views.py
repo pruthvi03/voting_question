@@ -287,7 +287,6 @@ def userprofile(request,username):
     else:
         everyinfos = User.objects.filter(username__exact = username).get()
         idofuser = everyinfos.id
-        print(idofuser)
         try:
             jem = UserFollowing.objects.filter(user__exact = request.user,following__exact = idofuser).get()  
             followingnum = UserFollowing.objects.filter(user__exact = request.user).count()
