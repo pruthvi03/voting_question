@@ -5,15 +5,12 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate ,login ,logout
 from polls.models import UserFollowing,QuestionTable,Groupcode
 from django.http import HttpResponseRedirect
-
-
 from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_text
 from .tokens import account_activation_token
 from django.core.mail import EmailMessage
-# Create your views here.
 
 
 def index(request):
@@ -190,10 +187,17 @@ def followers(request):
 
 def profile(request):
     userinfo = User.objects.filter(username__exact = request.user).get()
+    followingnum = UserFollowing.objects.filter(user__exact = request.user).count()
+    followers = UserFollowing.objects.filter(following__exact = request.user).count()
+
     params = {
         'result':userinfo,
+        'userfollowing':followingnum,
+        'userfollowers':followers,
+        'following':followingnum,
+        'followers':followers,
     }
-    return render(request,"profile3.html",params)
+    return render(request,"profile.html",params)
 
 def follow(request):
     if request.method== 'POST':
