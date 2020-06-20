@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.shortcuts import HttpResponse,redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate ,login ,logout
-from polls.models import UserFollowing,QuestionTable,Groupcode
+from polls.models import UserFollowing,QuestionTable,Groupcode,UserInfo
 from django.http import HttpResponseRedirect
 from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
@@ -11,6 +11,8 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_text
 from .tokens import account_activation_token
 from django.core.mail import EmailMessage
+from django.core.files.storage import FileSystemStorage
+
 
 
 def index(request):
@@ -198,6 +200,15 @@ def profile(request):
         'followers':followers,
     }
     return render(request,"profile.html",params)
+
+def updateImage(request):
+    if request.method == 'POST':
+        photo = request.FILES['profilepic']
+        name = UserInfo.objects.get(name = request.user)
+        name.profile_pic = photo
+        name.save()
+        messages.success(request,"Profile Pic updated succesfully")
+        return redirect('profile')
 
 def follow(request):
     if request.method== 'POST':
