@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.shortcuts import HttpResponse,redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate ,login ,logout
-from polls.models import UserFollowing,QuestionTable,Groupcode,UserInfo
+from polls.models import UserFollowing,QuestionTable,UserInfo
 from django.http import HttpResponseRedirect
 from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
@@ -19,9 +19,19 @@ def index(request):
     if request.user.is_authenticated:
         following = UserFollowing.objects.filter(user__exact = request.user).count()
         followers = UserFollowing.objects.filter(following__exact = request.user).count()
+        allfolloweres = list(UserFollowing.objects.filter(user__exact = request.user).all())
+        que = []
+        for i in allfolloweres:
+            kaib = list(QuestionTable.objects.filter(auther__exact = i.following))
+            que.append(kaib)
+        print(que)
+        res = list(filter(None, que)) 
+        print(res)
+
         params = {
             'followers':followers,
-            'following':following
+            'following':following,
+            'result':res,
         }
         return render(request,'index.html',params)
     else:
@@ -209,6 +219,8 @@ def updateImage(request):
         name.save()
         messages.success(request,"Profile Pic updated succesfully")
         return redirect('profile')
+    else:
+        pass
 
 def follow(request):
     if request.method== 'POST':
@@ -238,14 +250,28 @@ def unfollow(request):
         return HttpResponse('404 Error')
 
 def askquestion(request):
+    if request.method == 'POST':
+        question = request.POST['question']
+        option1 = request.POST['option1']
+        option2 = request.POST['option2']
+        option3 = request.POST['option3']
+        option4 = request.POST['option4']
+        groupcode = request.POST['groupcode']
+        letsmake = QuestionTable(question_text = question,groupcode = groupcode,op1=option1,op2=option2,op3=option3,op4=option4,auther=request.user)
+        letsmake.save()
+        messages.success(request,"Question has been created succsecfully!")
+        return redirect('home')
 
-    followingnum = UserFollowing.objects.filter(user__exact = request.user).count()
-    followers = UserFollowing.objects.filter(following__exact = request.user).count()
-    params = {
-        'following':followingnum,
-        'followers':followers,
-    }
-    return render(request,"askque.html",params)
+    else:
+        followingnum = UserFollowing.objects.filter(user__exact = request.user).count()
+        followers = UserFollowing.objects.filter(following__exact = request.user).count()
+        params = {
+            'following':followingnum,
+            'followers':followers,
+        }
+
+        return render(request,"askque.html",params)
+    
 
 def removeuser(request):
     if request.method == 'POST':

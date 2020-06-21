@@ -16,17 +16,16 @@ class UserFollowing(models.Model):
     def __str__(self):
        return self.following.username 
 
-class Groupcode(models.Model):
-    groupcode = models.CharField(max_length = 15)    
 
 class QuestionTable(models.Model):
 
     question_text = models.CharField(max_length = 300 ,null = False )
     pub_date = models.DateTimeField(auto_now_add=True)
-    group_code = models.ForeignKey(Groupcode , on_delete = models.CASCADE)
+    groupcode = models.CharField(max_length = 15,null=True,blank=True)    
     op1 = models.CharField(max_length = 100)
     op2 = models.CharField(max_length = 100)
-    op3 = models.CharField(max_length = 100 ,null = True)
-    op4 = models.CharField(max_length = 100 ,null = True)
+    op3 = models.CharField(max_length = 100 ,null = True,blank=True)
+    op4 = models.CharField(max_length = 100 ,null = True,blank=True)
     auther = models.ForeignKey(User,on_delete = models.CASCADE)
-
+    def __str__(self):
+        return self.auther.username

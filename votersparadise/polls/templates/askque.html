@@ -1,6 +1,6 @@
 {% extends 'layout.html' %}
 
-{% block title %}{{request.user|truncatechars:10}}'s Followers{% endblock %}
+{% block title %}Make Question{% endblock %}
 
 {%block style%}
 <style>
@@ -44,10 +44,59 @@
             <div class="bg-dark p-3 my-3 text-white-50 rounded shadow-sm">
                 <h3>Question:</h3>
             </div>
+            <form method="POST" action="askquestion">
+                {% csrf_token %}
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label for="inputEmail4">Question</label>
+                        <textarea rows="4" cols="15" id="question" name="question" class="container fluid"></textarea>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label for="inputEmail4">Option 1:</label>
+                        <input type="text" class="form-control" id="option1" name="option1" required>
+                    </div>
+
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label for="inputEmail4">Option 2:</label>
+                        <input type="text" class="form-control" id="option2" name="option2" required>
+                    </div>
+
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label for="inputEmail4">option 3:</label>
+                        <input type="text" class="form-control" id="option3" name="option3">
+                    </div>
+
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label for="inputEmail4">option 4:</label>
+                        <input type="text" class="form-control" id="option4" name="option4">
+                    </div>
+
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label for="inputEmail4">GroupCode:</label>
+                        <input type="text" class="form-control" id="groupcode" name="groupcode"
+                            placeholder="to share with anyone make a groupcode of your question and by searching groupcode person will be able to find your question">
+                    </div>
+
+                </div>
+
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+
+
         </div>
     </div>
     <div class="row">
-        
+
     </div>
 </div>
 
