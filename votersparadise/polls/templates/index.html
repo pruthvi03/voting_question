@@ -176,94 +176,37 @@
   </div>
   <div class="row" id="starts">
     <div class="col">
-
+    {%for res in result%}
+    {%for j in res%}
       <div class="shadow p-3 mb-5 bg-white rounded">
         <div class="question">
-          <strong>what shoud be done to universe in this pandamic situation?</strong>
+          <strong>{{j.question_text}}</strong>
         </div>
         <div class="answer">
           <br>
-          <div class="custom-control custom-radio">
-            <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
-            <label class="custom-control-label" for="customRadio1">Toggle this custom radio</label>
+      <form action="submitans" method="POST">
+      {% csrf_token %}
+          <div class="radio">
+            <label>A. <input type="radio" name="ans"> {{j.op1}}</label>
           </div>
-          <div class="custom-control custom-radio">
-            <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
-            <label class="custom-control-label" for="customRadio2">Or toggle this other custom radio</label>
+          <div class="radio">
+            <label>B. <input type="radio" name="ans"> {{j.op2}}</label>
           </div>
-          <div class="custom-control custom-radio">
-            <input type="radio" id="customRadio3" name="customRadio" class="custom-control-input">
-            <label class="custom-control-label" for="customRadio3">Or toggle this other custom radio</label>
+          <div class="radio">
+            <label>C. <input type="radio" name="ans"> {{j.op3}}</label>
           </div>
-        </div>
-
+          <div class="radio">
+            <label>D. <input type="radio" name="ans" onclick="makeans()"> {{j.op4}}</label>
+          </div>
       </div>
-
-      <div class="shadow p-3 mb-5 bg-white rounded">
-        <div class="question">
-          <strong>what shoud be done to universe in this pandamic situation?</strong>
-        </div>
-        <div class="answer">
-          <br>
-          <div class="custom-control custom-radio">
-            <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
-            <label class="custom-control-label" for="customRadio1">Toggle this custom radio</label>
-          </div>
-          <div class="custom-control custom-radio">
-            <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
-            <label class="custom-control-label" for="customRadio2">Or toggle this other custom radio</label>
-          </div>
-          <div class="custom-control custom-radio">
-            <input type="radio" id="customRadio3" name="customRadio" class="custom-control-input">
-            <label class="custom-control-label" for="customRadio3">Or toggle this other custom radio</label>
-          </div>
-        </div>
-
+        <input type="hidden" value="{{j.question_text}}" name="que">
+        <div class="d-flex justify-content-end">
+        <input type="submit" class="btn btn-info">
       </div>
-
-      <div class="shadow p-3 mb-5 bg-white rounded">
-        <div class="question">
-          <strong>what shoud be done to universe in this pandamic situation?</strong>
-        </div>
-        <div class="answer">
-          <br>
-          <div class="custom-control custom-radio">
-            <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
-            <label class="custom-control-label" for="customRadio1">Toggle this custom radio</label>
-          </div>
-          <div class="custom-control custom-radio">
-            <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
-            <label class="custom-control-label" for="customRadio2">Or toggle this other custom radio</label>
-          </div>
-          <div class="custom-control custom-radio">
-            <input type="radio" id="customRadio3" name="customRadio" class="custom-control-input">
-            <label class="custom-control-label" for="customRadio3">Or toggle this other custom radio</label>
-          </div>
-        </div>
-
+      </form>
       </div>
-      <div class="shadow p-3 mb-5 bg-white rounded">
-        <div class="question">
-          <strong>what shoud be done to universe in this pandamic situation?</strong>
-        </div>
-        <div class="answer">
-          <br>
-          <div class="custom-control custom-radio">
-            <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
-            <label class="custom-control-label" for="customRadio1">Toggle this custom radio</label>
-          </div>
-          <div class="custom-control custom-radio">
-            <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
-            <label class="custom-control-label" for="customRadio2">Or toggle this other custom radio</label>
-          </div>
-          <div class="custom-control custom-radio">
-            <input type="radio" id="customRadio3" name="customRadio" class="custom-control-input">
-            <label class="custom-control-label" for="customRadio3">Or toggle this other custom radio</label>
-          </div>
-        </div>
-
-      </div>
-
+      {% endfor %}
+    {% endfor %}
 
 
       <div class="ask fixed-bottom mb-3">
@@ -295,5 +238,5 @@
     </div>
     {%endblock%}
     {%block scripts%}
-
+    
     {%endblock%}

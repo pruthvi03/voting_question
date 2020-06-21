@@ -24,9 +24,7 @@ def index(request):
         for i in allfolloweres:
             kaib = list(QuestionTable.objects.filter(auther__exact = i.following))
             que.append(kaib)
-        print(que)
         res = list(filter(None, que)) 
-        print(res)
 
         params = {
             'followers':followers,
@@ -296,6 +294,7 @@ def userprofile(request,username):
             followers = UserFollowing.objects.filter(following__exact = request.user).count()
             userfollowing = UserFollowing.objects.filter(user__exact = everyinfos).count()
             userfollowers = UserFollowing.objects.filter(following__exact = everyinfos).count()
+            allque = QuestionTable.objects.filter(auther__exact = everyinfos).all()
             text = 'Unfollow'
             params = {
                 'result':everyinfos,
@@ -304,6 +303,7 @@ def userprofile(request,username):
                 'userfollowing':userfollowing,
                 'userfollowers':userfollowers,
                 'text':text,
+                'result2':allque,
             }
             return render(request,"profile3.html",params)
         except:

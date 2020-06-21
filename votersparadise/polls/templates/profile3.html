@@ -66,8 +66,40 @@
 
     <div class="container">
         <div class="row">
+            <div class="col">
+                {%if result2%}
+                {%for j in result2%}
+                <div class="shadow p-3 mb-5 bg-white rounded">
+                    <div class="question">
+                        <strong>{{j.question_text}}</strong>
+                    </div>
+                    <div class="answer">
+                        <br>
 
+                        <div class="radio">
+                            <label>A. <input type="radio" name="ans"> {{j.op1}}</label>
+                        </div>
+                        <div class="radio">
+                            <label>B. <input type="radio" name="ans"> {{j.op2}}</label>
+                        </div>
+                        <div class="radio">
+                            <label>C. <input type="radio" name="ans"> {{j.op3}}</label>
+                        </div>
+                        <div class="radio">
+                            <label>D. <input type="radio" name="ans" onclick="makeans()"> {{j.op4}}</label>
+                        </div>
+                    </div>
+
+                </div>
+            {%endfor%}
+                  {%else%}
+            <div class="shadow p-3 mb-5 bg-white rounded">
+                <label>no questions yet.</label>
+            </div>
+
+            {%endif%}
         </div>
+    </div>
 
 
 
