@@ -73,6 +73,10 @@
   .profilepic {
     margin: 0 auto 0 auto;
   }
+  #auther
+ {
+  font-size: small;
+  }
 </style>
 {%endblock%}
 
@@ -177,35 +181,46 @@
   <div class="row" id="starts">
     <div class="col">
     {%for res in result%}
-    {%for j in res%}
+    <div class="float-right">
+        <p id="auther"><span class="badge badge-secondary">{{res.auther}} {{res.pub_date}}</span></p>
+    </div>
       <div class="shadow p-3 mb-5 bg-white rounded">
         <div class="question">
-          <strong>{{j.question_text}}</strong>
+        
+          <strong>{{forloop.counter}}. {{res.question_text}}</strong>
         </div>
         <div class="answer">
           <br>
       <form action="submitans" method="POST">
       {% csrf_token %}
+      {% if res.op1 %}
           <div class="radio">
-            <label>A. <input type="radio" name="ans"> {{j.op1}}</label>
+            <label>A. <input type="radio" name="ans"> {{res.op1}}</label>
           </div>
+      {% endif %}
+      {% if res.op2 %}
           <div class="radio">
-            <label>B. <input type="radio" name="ans"> {{j.op2}}</label>
+            <label>B. <input type="radio" name="ans"> {{res.op2}}</label>
           </div>
+          {% endif %}
+          {% if res.op3 %}
           <div class="radio">
-            <label>C. <input type="radio" name="ans"> {{j.op3}}</label>
+            <label>C. <input type="radio" name="ans"> {{res.op3}}</label>
           </div>
+          {% endif %}
+          {% if res.op4 %}
           <div class="radio">
-            <label>D. <input type="radio" name="ans" onclick="makeans()"> {{j.op4}}</label>
+            <label>D. <input type="radio" name="ans" onclick="makeans()"> {{res.op4}}</label>
           </div>
+          {% endif %}
+          
       </div>
-        <input type="hidden" value="{{j.question_text}}" name="que">
+        <input type="hidden" value="{{res.question_text}}" name="que">
         <div class="d-flex justify-content-end">
         <input type="submit" class="btn btn-info">
       </div>
       </form>
       </div>
-      {% endfor %}
     {% endfor %}
 
 

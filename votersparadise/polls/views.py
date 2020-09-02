@@ -12,8 +12,16 @@ from django.utils.encoding import force_bytes, force_text
 from .tokens import account_activation_token
 from django.core.mail import EmailMessage
 from django.core.files.storage import FileSystemStorage
+from collections import Iterable
 
 
+def flatten(lis):
+     for item in lis:
+         if isinstance(item, Iterable) and not isinstance(item, str):
+             for x in flatten(item):
+                 yield x
+         else:        
+             yield item
 
 def index(request):
     if request.user.is_authenticated:
@@ -25,7 +33,9 @@ def index(request):
             kaib = list(QuestionTable.objects.filter(auther__exact = i.following))
             que.append(kaib)
         res = list(filter(None, que)) 
+        res = flatten(res)
 
+        print(res)
         params = {
             'followers':followers,
             'following':following,
@@ -199,13 +209,16 @@ def profile(request):
     userinfo = User.objects.filter(username__exact = request.user).get()
     followingnum = UserFollowing.objects.filter(user__exact = request.user).count()
     followers = UserFollowing.objects.filter(following__exact = request.user).count()
-
+    question = QuestionTable.objects.filter(auther=request.user).all()
+    question_count= len(question)
     params = {
         'result':userinfo,
         'userfollowing':followingnum,
         'userfollowers':followers,
         'following':followingnum,
         'followers':followers,
+        'question_count' : question_count,
+        'question':question,
     }
     return render(request,"profile.html",params)
 
