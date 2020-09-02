@@ -235,7 +235,7 @@ def delete_account(request):
         name = request.POST['username']
         username = User.objects.filter(username__exact = request.user).get()
         username.delete()
-        return redirect('home')
+        return render('home')
 
 
 def updateImage(request):
@@ -283,8 +283,7 @@ def askquestion(request):
         option2 = request.POST['option2']
         option3 = request.POST['option3']
         option4 = request.POST['option4']
-        groupcode = request.POST['groupcode']
-        letsmake = QuestionTable(question_text = question,groupcode = groupcode,op1=option1,op2=option2,op3=option3,op4=option4,auther=request.user)
+        letsmake = QuestionTable(question_text = question,op1=option1,op2=option2,op3=option3,op4=option4,auther=request.user)
         letsmake.save()
         messages.success(request,"Question has been created succsecfully!")
         return redirect('home')
