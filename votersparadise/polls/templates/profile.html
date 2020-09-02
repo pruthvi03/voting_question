@@ -28,15 +28,15 @@
                     <div class="d-flex justify-content-left">
                         <div class="d-flex flex-column">
                             <h1 class="display-5">{{result.username}}</h1>
-                            <p>{{result.first_name}} {{result.last_name}}</p>
-                            <p>{{result.email}}</p>
+                            <p style="color:blueviolet;"><b>{{result.first_name}} {{result.last_name}}</b></p>
+                            <p style="color:black;"><b>{{result.email}}</b></p>
                             <div class="d-flex flex-row">
                                 <div class="d-flex flex-column mr-4">
 
                                     <div class="d-flex justify-content-center">
                                         <strong>{{question_count}}</strong>
                                     </div>
-                                    <p>Questions</p>
+                                    <p style="color: blueviolet;"><b>Question</b></p>
                                 </div>
                                 <div class="d-flex flex-column mr-4">
                                     <div class="d-flex justify-content-center">
@@ -44,20 +44,42 @@
                                         <strong>{{userfollowing}}</strong>
                                     </div>
 
-                                    <p><a href="following" style="text-decoration: none;"><b>Following</b></a> </p>
+                                    <p><a href="following" style="text-decoration: none;color: blueviolet;"><b>Following</b></a> </p>
                                 </div>
                                 <div class="d-flex flex-column mr-4">
                                     <div class="d-flex justify-content-center">
                                         <strong>{{userfollowers}}</strong>
                                     </div>
-                                    <p><a href="followers" style="text-decoration: none;"><b>Followers</b></a> </p>
+                                    <p><a href="followers" style="text-decoration: none;color: blueviolet;"><b>Followers</b></a> </p>
                                 </div>
 
                             </div>
-                            <form method="POST" action="update_info">
-                                {% csrf_token %}
-                                <button type="submit" class="btn btn-info">Update info</button>
-                            </form>
+                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">
+                                Delete account
+                            </button>
+                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h5 class="modal-title" id="exampleModalLabel">Are you sure?</h5>
+                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                      </button>
+                                    </div>
+                                    <div class="modal-body">
+                                      <form action="profile/delete_account" method="POST">
+                                      {% csrf_token %}
+                                      <p><b>Enter your username to continue.</b></p>
+                                      <label>Username:</label>
+                                      <input type="name" id="username" name="username" style="border-width: 3px;">  
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-danger">Confirm</button>
+                                    </form>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
 
                         </div>
                     </div>

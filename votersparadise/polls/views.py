@@ -230,6 +230,14 @@ def profile(request):
     }
     return render(request,"profile.html",params)
 
+def delete_account(request):
+    if request.method == 'POST':
+        name = request.POST['username']
+        username = User.objects.filter(username__exact = request.user).get()
+        username.delete()
+        return redirect('home')
+
+
 def updateImage(request):
     if request.method == 'POST':
         photo = request.FILES['profilepic']
@@ -237,7 +245,7 @@ def updateImage(request):
         name.profile_pic = photo
         name.save()
         messages.success(request,"Profile Pic updated succesfully")
-        return redirect('profile')
+        return redirect(profile)
     else:
         pass
 
