@@ -44,17 +44,20 @@
                                         <strong>{{userfollowing}}</strong>
                                     </div>
 
-                                    <p>Following</p>
+                                    <p><a href="following" style="text-decoration: none;"><b>Following</b></a> </p>
                                 </div>
                                 <div class="d-flex flex-column mr-4">
                                     <div class="d-flex justify-content-center">
                                         <strong>{{userfollowers}}</strong>
                                     </div>
-                                    <p>Followers</p>
+                                    <p><a href="followers" style="text-decoration: none;"><b>Followers</b></a> </p>
                                 </div>
 
                             </div>
-
+                            <form method="POST" action="update_info">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-info">Update info</button>
+                            </form>
 
                         </div>
                     </div>
@@ -70,25 +73,41 @@
                 {%for res in question%}
                 
                   <div class="shadow p-3 mb-5 bg-white rounded">
-                    <div class="question">
-                      <strong>{{forloop.counter}}. {{res.question_text}}</strong>
+                        <div class="question">
+                        <strong>{{forloop.counter}}. {{res.question_text}}</strong>
+                        </div>
+                        <div class="answer">
+                        <br>
+                        {% if res.op1 %}
+                        <div class="radio">
+                            <label>A. <input type="radio" name="ans"> {{res.op1}}</label>
+                        </div>
+                        {% endif %}
+                        {% if res.op2 %}
+                        <div class="radio">
+                            <label>B. <input type="radio" name="ans"> {{res.op2}}</label>
+                        </div>
+                        {% endif %}
+                        {% if re.op3 %}
+                        <div class="radio">
+                            <label>C. <input type="radio" name="ans"> {{res.op3}}</label>
+                        </div>
+                        {% endif %}
+                        {%if res.op4 %}
+                        <div class="radio">
+                            <label>D. <input type="radio" name="ans"> {{res.op4}}</label>
+                        </div>
+                        {% endif %}
+                        <div class="d-flex justify-content-end">
+                            
+                            <form method="POST" action="profile/delete_question">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                                <input type="hidden" value="{{res.question_text}}" id="question_text" name="question_text">
+                            </form>
+                        </div>
                     </div>
-                    <div class="answer">
-                      <br>
-                      <div class="radio">
-                        <label>A. <input type="radio" name="ans"> {{res.op1}}</label>
-                      </div>
-                      <div class="radio">
-                        <label>B. <input type="radio" name="ans"> {{res.op2}}</label>
-                      </div>
-                      <div class="radio">
-                        <label>C. <input type="radio" name="ans"> {{res.op3}}</label>
-                      </div>
-                      <div class="radio">
-                        <label>D. <input type="radio" name="ans" onclick="makeans()"> {{res.op4}}</label>
-                      </div>
-                  </div>
-                   
+                    
                   </div>
                   {% endfor %}
                   {%endif%}

@@ -45,6 +45,14 @@ def index(request):
     else:
         return render(request,'index.html')
 
+def delete_question(request):
+    if request.method == 'POST':
+        question = request.POST['question_text']
+        print(question)
+        delete_que = QuestionTable.objects.get(question_text=question,auther=request.user)
+        delete_que.delete()
+        return redirect(profile)
+
 def passreset(request):
     return render(request,'passreset.html')
 
