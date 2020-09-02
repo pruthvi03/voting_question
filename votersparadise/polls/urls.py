@@ -23,4 +23,5 @@ urlpatterns = [
   path(r"updateImage",views.updateImage,name="updateImage"),
   path(r"profile/delete_question",views.delete_question,name="delete_question"),
   path(r"profile/delete_account",views.delete_account,name="delete_account"),
+  path(r"submit_ans",views.submit_ans,name="submit_ans"),
 ]

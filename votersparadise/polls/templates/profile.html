@@ -158,6 +158,10 @@
                     
                   
                   {% endfor %}
+                {% else %}
+                <div class="shadow p-3 mb-5 bg-white rounded">
+                    <label>no questions yet.</label>
+                </div>
                   {%endif%}
         </div>
     </div>
@@ -243,16 +247,12 @@ for(i=0;i<4;i++){
 
 if (count == 1){
     document.getElementById("{{res.count1}}").className = "badge badge-warning";
-    console.log({{res.count1}});
 }if (count == 2){
     document.getElementById("{{res.count2}}").className = "badge badge-warning";
-    console.log({{res.count1}});
 }if (count == 3){
     document.getElementById("{{res.count3}}").className = "badge badge-warning";
-    console.log({{res.count1}});
 }if (count == 4){
     document.getElementById("{{res.count4}}").className = "badge badge-warning";
-    console.log({{res.count1}});
 }
 
 {% endfor %}

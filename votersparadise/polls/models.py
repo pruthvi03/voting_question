@@ -25,10 +25,10 @@ class QuestionTable(models.Model):
     op2 = models.CharField(max_length = 100)
     op3 = models.CharField(max_length = 100 ,null = True,blank=True)
     op4 = models.CharField(max_length = 100 ,null = True,blank=True)
-    count1 = models.DecimalField(max_digits=5, decimal_places=2,null=True,blank=True)
-    count2 = models.DecimalField(max_digits=5, decimal_places=2,null=True,blank=True)
-    count3 = models.DecimalField(max_digits=5, decimal_places=2,null=True,blank=True)
-    count4 = models.DecimalField(max_digits=5, decimal_places=2,null=True,blank=True)
+    count1 = models.DecimalField(max_digits=5, decimal_places=2,default=0)
+    count2 = models.DecimalField(max_digits=5, decimal_places=2,default=0)
+    count3 = models.DecimalField(max_digits=5, decimal_places=2,default=0)
+    count4 = models.DecimalField(max_digits=5, decimal_places=2,default=0)
     auther = models.ForeignKey(User,on_delete = models.CASCADE,null=True,blank=True)
     def __str__(self):
         return self.auther.username

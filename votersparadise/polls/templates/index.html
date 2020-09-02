@@ -191,33 +191,33 @@
         </div>
         <div class="answer">
           <br>
-      <form action="submitans" method="POST">
+      <form method="POST" action="submit_ans">
       {% csrf_token %}
       {% if res.op1 %}
           <div class="radio">
-            <label>A. <input type="radio" name="{{res.op1}}"> {{res.op1}}</label>
+            <label>A. <input type="radio" name="ans" value="A"> {{res.op1}}</label>
           </div>
       {% endif %}
       {% if res.op2 %}
           <div class="radio">
-            <label>B. <input type="radio" name="{{res.op1}}"> {{res.op2}}</label>
+            <label>B. <input type="radio" name="ans" value="B"> {{res.op2}}</label>
           </div>
           {% endif %}
           {% if res.op3 %}
           <div class="radio">
-            <label>C. <input type="radio" name="{{res.op1}}"> {{res.op3}}</label>
+            <label>C. <input type="radio" name="ans" value="C"> {{res.op3}}</label>
           </div>
           {% endif %}
           {% if res.op4 %}
           <div class="radio">
-            <label>D. <input type="radio" name="{{res.op1}}" onclick="makeans()"> {{res.op4}}</label>
+            <label>D. <input type="radio" name="ans" value="D"> {{res.op4}}</label>
           </div>
           {% endif %}
           
       </div>
         <input type="hidden" value="{{res.question_text}}" name="que">
-        <div class="d-flex justify-content-end">
-        <input type="submit" class="btn btn-info">
+        <div class="d-flex justify-content-center">
+        <input type="submit" id="{{res.question_text}}" class="btn btn-info">
       </div>
       </form>
       </div>
@@ -253,5 +253,8 @@
     </div>
     {%endblock%}
     {%block scripts%}
+    <script>
+       
     
+    </script>
     {%endblock%}

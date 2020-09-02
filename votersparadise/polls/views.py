@@ -45,6 +45,23 @@ def index(request):
     else:
         return render(request,'index.html')
 
+def submit_ans(request):
+    if request.method == "POST":
+        ans = request.POST["ans"]
+        que = request.POST["que"]
+        update = QuestionTable.objects.get(question_text= que)
+        if ans == "A":
+            update.count1 = update.count1 + 1
+        if ans == "B":
+            update.count2 = update.count2 + 1
+        if ans == "C":
+            update.count3 = update.count3 + 1
+        if ans == "D":
+            update.count4 = update.count4 + 1
+        update.save()
+        return redirect('home')
+
+
 def delete_question(request):
     if request.method == 'POST':
         question = request.POST['question_text']
@@ -331,7 +348,7 @@ def userprofile(request,username):
                 'userfollowing':userfollowing,
                 'userfollowers':userfollowers,
                 'text':text,
-                'result2':allque,
+                'question':allque,
             }
             return render(request,"profile3.html",params)
         except:
