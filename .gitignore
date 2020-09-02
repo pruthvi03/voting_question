@@ -1,5 +1,6 @@
 # Byte-compiled / optimized / DLL files
-__pycache__/
+votersparadise/polls/__pycache__/
+votersparadise/votersparadise/__pycache__
 *.py[cod]
 *$py.class
 
