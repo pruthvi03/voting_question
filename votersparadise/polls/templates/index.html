@@ -195,7 +195,7 @@
       {% csrf_token %}
       {% if res.op1 %}
           <div class="radio">
-            <label>A. <input type="radio" name="ans" value="A"> {{res.op1}}</label>
+            <label>A. <input type="radio" name="ans" value="A" required> {{res.op1}}</label>
           </div>
       {% endif %}
       {% if res.op2 %}

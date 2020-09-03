@@ -31,4 +31,12 @@ class QuestionTable(models.Model):
     count4 = models.DecimalField(max_digits=5, decimal_places=2,default=0)
     auther = models.ForeignKey(User,on_delete = models.CASCADE,null=True,blank=True)
     def __str__(self):
-        return self.auther.username
+        return self.question_text 
+
+class Given_ans(models.Model):
+
+    question = models.ForeignKey(QuestionTable,on_delete= models.CASCADE)
+    user = models.ForeignKey(User,on_delete= models.CASCADE) 
+
+    def __str__(self):
+        return self.user.username

@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.shortcuts import HttpResponse,redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate ,login ,logout
-from polls.models import UserFollowing,QuestionTable,UserInfo
+from polls.models import UserFollowing,QuestionTable,UserInfo,Given_ans
 from django.http import HttpResponseRedirect
 from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
@@ -27,19 +27,35 @@ def index(request):
     if request.user.is_authenticated:
         following = UserFollowing.objects.filter(user__exact = request.user).count()
         followers = UserFollowing.objects.filter(following__exact = request.user).count()
-        allfolloweres = list(UserFollowing.objects.filter(user__exact = request.user).all())
+        allfolloweres = UserFollowing.objects.filter(user__exact = request.user).all()
         que = []
-        for i in allfolloweres:
-            kaib = list(QuestionTable.objects.filter(auther__exact = i.following))
-            que.append(kaib)
-        res = list(filter(None, que)) 
-        res = flatten(res)
+        listofans = Given_ans.objects.filter(user=request.user)
+        count = len(listofans)
+        res = QuestionTable.objects.filter(auther__in=allfolloweres.values_list('following'))
+        for k in res:
+            num = count
+            for j in listofans:
+                
+                if str(k.question_text) == str(j.question):
+                    break
+                else:
+                    num = num - 1
+                    if num == 0:
+                        que.append(k)
+                    
 
-        print(res)
+        # for i in allfolloweres:   
+        #     kaib = QuestionTable.objects.filter(auther__exact = i.following)
+        #     que.append(kaib)
+            
+        # res = list(filter(None, que)) 
+        # res = flatten(res)
+
+        # print(res)
         params = {
             'followers':followers,
             'following':following,
-            'result':res,
+            'result':que,
         }
         return render(request,'index.html',params)
     else:
@@ -58,6 +74,9 @@ def submit_ans(request):
             update.count3 = update.count3 + 1
         if ans == "D":
             update.count4 = update.count4 + 1
+        save_ans = Given_ans(question=update,user=request.user)
+        save_ans.save()
+        messages.success(request,"your ans has been recorded.")
         update.save()
         return redirect('home')
 
@@ -358,6 +377,8 @@ def userprofile(request,username):
             followers = UserFollowing.objects.filter(following__exact = request.user).count()
             userfollowing = UserFollowing.objects.filter(user__exact = everyinfos).count()
             userfollowers = UserFollowing.objects.filter(following__exact = everyinfos).count()
+            allque = QuestionTable.objects.filter(auther__exact = everyinfos).all()
+
             text='Follow'
             params = {
                 'result':everyinfos,
@@ -366,6 +387,7 @@ def userprofile(request,username):
                 'userfollowing':userfollowing,
                 'userfollowers':userfollowers,
                 'text':text,
+                'question':allque,
             }
             return render(request,"profile3.html",params)
         
@@ -379,6 +401,8 @@ def userprofile(request,username):
             followers = UserFollowing.objects.filter(following__exact = request.user).count()
             userfollowing = UserFollowing.objects.filter(user__exact = everyinfos).count()
             userfollowers = UserFollowing.objects.filter(following__exact = everyinfos).count()
+            allque = QuestionTable.objects.filter(auther__exact = everyinfos).all()
+
             text = 'Unfollow'
             params = {
                 'result':everyinfos,
@@ -387,6 +411,7 @@ def userprofile(request,username):
                 'userfollowing':userfollowing,
                 'userfollowers':userfollowers,
                 'text':text,
+                'question':allque,
             }
             return render(request,"profile3.html",params)
 
@@ -395,6 +420,8 @@ def userprofile(request,username):
             followers = UserFollowing.objects.filter(following__exact = request.user).count()
             userfollowing = UserFollowing.objects.filter(user__exact = everyinfos).count()
             userfollowers = UserFollowing.objects.filter(following__exact = everyinfos).count()
+            allque = QuestionTable.objects.filter(auther__exact = everyinfos).all()
+
             text='Follow'
             params = {
                 'result':everyinfos,
@@ -403,6 +430,7 @@ def userprofile(request,username):
                 'userfollowing':userfollowing,
                 'userfollowers':userfollowers,
                 'text':text,
+                'question':allque,
             }
             return render(request,"profile3.html",params)
         

@@ -124,22 +124,22 @@
                         <div class="col">
 
                             {% if res.count1 %}
-                            <h3><span class="badge badge-secondary" id="{{res.count1}}">A.<p id="count1" style="display: inline;">{{res.count1}}</p></span></h3>
+                            <h3><span class="badge badge-secondary" id="{{forloop.counter}}{{res.count1}}">A.<p id="count1" style="display: inline;">{{res.count1}}</p></span></h3>
                             {% endif %}
                         </div>
                         <div class="col">
                             {% if res.count2 %}
-                            <h3><span class="badge badge-secondary" id="{{res.count2}}">B.<p id="count2" style="display: inline;">{{res.count2}}</p></span></h3>
+                            <h3><span class="badge badge-secondary" id="{{forloop.counter}}{{res.count2}}">B.<p id="count2" style="display: inline;">{{res.count2}}</p></span></h3>
                             {% endif %}
                         </div>
                         <div class="col">
                             {% if res.count3 %}
-                            <h3><span class="badge badge-secondary" id="{{res.count3}}">C.<p id="count3" style="display: inline;">{{res.count3}}</p></span></h3>
+                            <h3><span class="badge badge-secondary" id="{{forloop.counter}}{{res.count3}}">C.<p id="count3" style="display: inline;">{{res.count3}}</p></span></h3>
                             {% endif %}
                         </div>
                         <div class="col">
                             {% if res.count4 %}
-                            <h3><span class="badge badge-secondary" id="{{res.count4}}">D.<p id="count4" style="display: inline;">{{res.count4}}</p></span></h3>
+                            <h3><span class="badge badge-secondary" id="{{forloop.counter}}{{res.count4}}">D.<p id="count4" style="display: inline;">{{res.count4}}</p></span></h3>
                             {% endif %}
                         </div>
                         
@@ -190,7 +190,7 @@
 {% if res.count1 %}
 var count1 = {{res.count1}};
 {% else %}
-var count = Number(0);
+var count1 = Number(0);
 {% endif %}
 
 {% if res.count2 %}
@@ -246,13 +246,13 @@ for(i=0;i<4;i++){
 }
 
 if (count == 1){
-    document.getElementById("{{res.count1}}").className = "badge badge-warning";
+    document.getElementById("{{forloop.counter}}{{res.count1}}").className = "badge badge-warning";
 }if (count == 2){
-    document.getElementById("{{res.count2}}").className = "badge badge-warning";
+    document.getElementById("{{forloop.counter}}{{res.count2}}").className = "badge badge-warning";
 }if (count == 3){
-    document.getElementById("{{res.count3}}").className = "badge badge-warning";
+    document.getElementById("{{forloop.counter}}{{res.count3}}").className = "badge badge-warning";
 }if (count == 4){
-    document.getElementById("{{res.count4}}").className = "badge badge-warning";
+    document.getElementById("{{forloop.counter}}{{res.count4}}").className = "badge badge-warning";
 }
 
 {% endfor %}
